@@ -134,13 +134,13 @@
           </el-col>
         </el-row>
 
-        <el-row class="outer-row ofen-use">
+        <el-row class="outer-row" gutter="20">
           <el-col :xs="24" :sm="24" :md="12" :lg="12">
-            <el-card>
+            <el-card style="padding-bottom: 8px">
               <template #header>
                 <div>常用功能</div>
               </template>
-              <el-row class="function text-center">
+              <el-row class="ofen-use text-center">
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
                   <el-card> 进货单报表</el-card>
                 </el-col>
@@ -170,13 +170,13 @@
               <template #header>
                 <div>汇总信息</div>
               </template>
-              <el-row class="summary text-center">
+              <el-row class="summary">
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
                   <el-card >
                     <div>客户总数</div>
-                    <p>
-                      1
-                    </p>
+                    <div class="summary-num">
+                      11123
+                    </div>
                   </el-card>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
@@ -190,9 +190,9 @@
                     <div>
                       客户总数
                     </div>
-                    <p>
-                      1
-                    </p>
+                    <div class="summary-num">
+                      11123
+                    </div>
                   </el-card>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
@@ -297,12 +297,14 @@ const handleTodaySale = () => {
     @extend .el-card-common;
   }
 
-  .ofen-use, .summary-info {
-    .function, summary {
-      .el-card {
-        @extend .el-card-common;
-        margin: 5px;
-      }
+  .ofen-use, .summary {
+    .el-card {
+      @extend .el-card-common;
+      margin: 5px;
+    }
+    .summary-num {
+      font-size: 22px;
+      padding-top: 10px;
     }
   }
 
