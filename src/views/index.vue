@@ -2,7 +2,7 @@
   <div class="app-container home">
     <el-row gutter="20">
       <el-col :xs="24" :sm="24" :md="12" :lg="20">
-        <el-row>
+        <el-row class="outer-row">
           <el-col :xs="24" :sm="24" :md="12" :lg="8">
             <el-card class="module" shadow="hover">
               <p>
@@ -35,7 +35,7 @@
           </el-col>
         </el-row>
 
-        <el-row>
+        <el-row class="outer-row">
           <el-col :xs="24" :sm="24" :md="12" :lg="6">
             <el-card class="module" shadow="hover">
               <p class="center-content">
@@ -99,7 +99,7 @@
           <el-col :xs="24" :sm="24" :md="12" :lg="6">
             <el-card class="module" shadow="hover">
               <p class="center-content">
-                <el-icon>
+                <el-icon color="#409efc">
                   <Avatar/>
                 </el-icon>
               </p>
@@ -134,13 +134,12 @@
           </el-col>
         </el-row>
 
-        <el-row>
+        <el-row class="outer-row">
           <el-col :xs="24" :sm="24" :md="12" :lg="12">
-            <el-card>
+            <el-card class="ofen-used">
               <template #header>
                 <div>常用功能</div>
               </template>
-
               <el-row>
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
                   <el-card class="module"> 进货单报表</el-card>
@@ -191,13 +190,13 @@
           </el-col>
         </el-row>
 
-        <el-row :gutter="0">
+        <el-row :gutter="0"  class="outer-row">
           <el-col :xs="24" :sm="24" :md="12" :lg="24">
             <el-card class="module"> 数据概览</el-card>
           </el-col>
         </el-row>
 
-        <el-row>
+        <el-row class="outer-row">
           <el-col :xs="24" :sm="24" :md="12" :lg="12">
             <el-card>
               <div>资产情况</div>
@@ -276,6 +275,11 @@ const handleTodaySale = () => {
     }
   }
 
+  .ofen-used .module {
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
+
   .module .center-content {
     display: flex;
     justify-content: center;
@@ -284,7 +288,7 @@ const handleTodaySale = () => {
     font-size: 22px;
   }
 
-  .el-row, .right-card{
+  .outer-row, .right-card{
     margin-bottom: 20px;
   }
 
