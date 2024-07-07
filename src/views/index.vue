@@ -2,31 +2,31 @@
   <div class="app-container home">
     <el-row gutter="20">
       <el-col :xs="24" :sm="24" :md="12" :lg="20">
-        <el-row class="outer-row">
+        <el-row class="outer-row sale">
           <el-col :xs="24" :sm="24" :md="12" :lg="8">
-            <el-card class="module" shadow="hover">
+            <el-card shadow="hover">
               <p>
-            <span>
-              <el-text class="mx-1 " size="large" tag="b">¥3000.00</el-text>
-            </span>
-                <el-text class="mx-1" size="small">昨日 2000.23</el-text>
+                <span>
+                  <el-text class="mx-1 " size="large" tag="b">¥3000.00</el-text>
+                </span>
+                    <el-text class="mx-1" size="small" style="margin-left: 5px">昨日 2000.23</el-text>
               </p>
               <el-text class="mx-1">今日销售额</el-text>
             </el-card>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="8">
-            <el-card class="module" shadow="hover">
+            <el-card shadow="hover">
               <p>
           <span>
             <el-text class="mx-1 " size="large" tag="b">¥3000.00</el-text>
           </span>
-                <el-text class="mx-1" size="small">昨日 2000.23</el-text>
+                <el-text class="mx-1" size="small" style="margin-left: 5px">昨日 2000.23</el-text>
               </p>
               <el-text class="mx-1">今日销售毛利</el-text>
             </el-card>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="8">
-            <el-card class="module" shadow="hover">
+            <el-card shadow="hover">
               <p>
                 <el-text class="mx-1" size="large" tag="b">100</el-text>
               </p>
@@ -35,155 +35,168 @@
           </el-col>
         </el-row>
 
-        <el-row class="outer-row">
+        <el-row class="outer-row module">
           <el-col :xs="24" :sm="24" :md="12" :lg="6">
-            <el-card class="module" shadow="hover">
-              <p class="center-content">
+            <el-card shadow="hover">
+              <p>
                 <el-icon>
                   <Sell/>
                 </el-icon>
               </p>
-              <p class="center-content">
+              <p>
                 销售
               </p>
             </el-card>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="6">
-            <el-card class="module" shadow="hover">
-              <p class="center-content">
+            <el-card shadow="hover">
+              <p>
                 <el-icon>
                   <SoldOut/>
                 </el-icon>
               </p>
-              <p class="center-content">
+              <p>
                 进货
               </p>
             </el-card>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="6">
-            <el-card class="module" shadow="hover">
-              <p class="center-content">
+            <el-card shadow="hover">
+              <p>
                 <el-icon>
                   <TakeawayBox/>
                 </el-icon>
               </p>
-              <p class="center-content">
+              <p>
                 库存
               </p>
             </el-card>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="6">
-            <el-card class="module" shadow="hover">
-              <p class="center-content">
+            <el-card shadow="hover">
+              <p>
                 <el-icon>
                   <Box/>
                 </el-icon>
               </p>
-              <p class="center-content">
+              <p>
                 商品
               </p>
             </el-card>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="6">
-            <el-card class="module" shadow="hover">
-              <p class="center-content">
+            <el-card shadow="hover">
+              <p>
                 <el-icon>
                   <User/>
                 </el-icon>
               </p>
-              <p class="center-content">
+              <p>
                 客户
               </p>
             </el-card>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="6">
-            <el-card class="module" shadow="hover">
-              <p class="center-content">
+            <el-card shadow="hover">
+              <p>
                 <el-icon color="#409efc">
                   <Avatar/>
                 </el-icon>
               </p>
-              <p class="center-content">
+              <p>
                 供应商
               </p>
             </el-card>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="6">
-            <el-card class="module" shadow="hover">
-              <p class="center-content">
+            <el-card shadow="hover">
+              <p>
                 <el-icon>
                   <PieChart/>
                 </el-icon>
               </p>
-              <p class="center-content">
+              <p>
                 销售报表
               </p>
             </el-card>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="6">
-            <el-card class="module" shadow="hover">
-              <p class="center-content">
+            <el-card shadow="hover">
+              <p>
                 <el-icon>
                   <Printer/>
                 </el-icon>
               </p>
-              <p class="center-content">
+              <p>
                 打印模板
               </p>
             </el-card>
           </el-col>
         </el-row>
 
-        <el-row class="outer-row">
+        <el-row class="outer-row ofen-use">
           <el-col :xs="24" :sm="24" :md="12" :lg="12">
-            <el-card class="ofen-used">
+            <el-card>
               <template #header>
                 <div>常用功能</div>
               </template>
-              <el-row>
+              <el-row class="function text-center">
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
-                  <el-card class="module"> 进货单报表</el-card>
+                  <el-card> 进货单报表</el-card>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
-                  <el-card class="module"> 销售单报表</el-card>
+                  <el-card> 销售单报表</el-card>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
-                  <el-card class="module"> 库存查询</el-card>
+                  <el-card> 库存查询</el-card>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
-                  <el-card class="module"> 商品利润表</el-card>
+                  <el-card> 商品利润表</el-card>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
-                  <el-card class="module"> 销售利润表</el-card>
+                  <el-card> 销售利润表</el-card>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
-                  <el-card class="module"> 客户管理</el-card>
+                  <el-card> 客户管理</el-card>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
-                  <el-card class="module"> 商品管理</el-card>
+                  <el-card> 商品管理</el-card>
                 </el-col>
               </el-row>
             </el-card>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="12">
             <el-card>
-              <div>汇总信息</div>
-              <el-divider/>
-              <el-row>
+              <template #header>
+                <div>汇总信息</div>
+              </template>
+              <el-row class="summary text-center">
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
-                  <el-card class="module"> 进货单报表</el-card>
+                  <el-card >
+                    <div>客户总数</div>
+                    <p>
+                      1
+                    </p>
+                  </el-card>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
-                  <el-card class="module"> 销售单报表</el-card>
+                  <el-card> 销售单报表</el-card>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
-                  <el-card class="module"> 库存查询</el-card>
+                  <el-card> 库存查询</el-card>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
-                  <el-card class="module"> 商品利润表</el-card>
+                  <el-card >
+                    <div>
+                      客户总数
+                    </div>
+                    <p>
+                      1
+                    </p>
+                  </el-card>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="12" :lg="8">
-                  <el-card class="module"> 销售利润表</el-card>
+                  <el-card> 销售利润表</el-card>
                 </el-col>
               </el-row>
             </el-card>
@@ -192,7 +205,7 @@
 
         <el-row :gutter="0"  class="outer-row">
           <el-col :xs="24" :sm="24" :md="12" :lg="24">
-            <el-card class="module"> 数据概览</el-card>
+            <el-card> 数据概览</el-card>
           </el-col>
         </el-row>
 
@@ -267,25 +280,30 @@ const handleTodaySale = () => {
   color: #676a6c;
   overflow-x: hidden;
 
-  .module {
-    cursor: pointer;
+  .module .el-card{
+    @extend .el-card-common;
 
-    &:hover {
-      background-color: #f8f8f8;
+    p {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 22px;
+      padding: 5px;
     }
   }
-
-  .ofen-used .module {
-    margin-bottom: 10px;
-    margin-left: 10px;
+  .sale .el-card {
+    @extend .el-card-common;
   }
 
-  .module .center-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 22px;
+  .ofen-use, .summary-info {
+    .function, summary {
+      .el-card {
+        @extend .el-card-common;
+        margin: 5px;
+      }
+    }
   }
 
   .outer-row, .right-card{
@@ -294,6 +312,15 @@ const handleTodaySale = () => {
 
   b {
     font-size: 22px;
+  }
+
+  /* 定义通用样式 */
+  .el-card-common {
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f8f8f8;
+    }
   }
 }
 </style>
