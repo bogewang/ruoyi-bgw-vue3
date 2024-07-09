@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, nextTick } from 'vue';
+import {ref, onMounted, nextTick, onBeforeUnmount} from 'vue';
 import * as echarts from 'echarts';
 
 const charts = [
@@ -8,7 +8,7 @@ const charts = [
   { title: '销售额3', data: [{ date: '2024-07-01', sales: 150 }, { date: '2024-07-02', sales: 200 }, { date: '2024-07-03', sales: 170 }, { date: '2024-07-04', sales: 140 }, { date: '2024-07-05', sales: 110 }, { date: '2024-07-06', sales: 300 }, { date: '2024-07-07', sales: 250 }] }
 ];
 
-const chartRefs = ref([]);
+const chartRefs = ref([])
 
 const setupChart = async () => {
   await nextTick();
@@ -63,13 +63,16 @@ onMounted(() => {
 const resizeCharts = () => {
   chartRefs.value.forEach(chart => chart.resize());
 };
-
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', resizeChart);
+  chartRefs.value.forEach(chart => chart.dispose());
+});
 </script>
 
 <template>
   <el-carousel height="400px" indicator-position="outside">
     <el-carousel-item v-for="(chart, index) in charts" :key="index">
-      <div :ref="el => { chartRefs[index] = el }" :id="'chart' + index" style="width: 100%; height: 100%;"></div>
+      <div :id="'chart' + index" style="width: 100%; height: 100%;"></div>
     </el-carousel-item>
   </el-carousel>
 </template>
