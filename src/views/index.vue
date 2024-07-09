@@ -289,7 +289,8 @@ const setupChart = async () => {
       const myChart = echarts.init(chartDom);
       const option = {
         title: {
-          text: chart.title
+          text: chart.title,
+          left: 'center'
         },
         tooltip: {
           trigger: 'axis',
