@@ -1,5 +1,16 @@
 <template>
-    <div ref="chartRef" style="width: 100%; height: 400px;"></div>
+  <el-card>
+    <template #header>
+      资产情况
+    </template>
+    <div>
+      总资产 = (账户余额 + 库存总额 + 应收欠款 - 应付欠款)
+    </div>
+    <p class="font22">
+      131,507.10
+    </p>
+    <div ref="chartRef" style="width: 100%; height: 350px;"></div>
+  </el-card>
 </template>
 
 <script setup>
@@ -78,4 +89,7 @@ const resizeChart = () => {
 
 <style scoped lang="scss">
 /* 添加必要的样式 */
+.font22 {
+  font-size: 22px;
+}
 </style>

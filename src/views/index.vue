@@ -216,18 +216,7 @@
 
         <el-row class="outer-row">
           <el-col :xs="24" :sm="24" :md="12" :lg="12">
-            <el-card>
-              <template #header>
-                资产情况
-              </template>
-              <div>
-                总资产(= 账户余额 + 库存总额 + 应收欠款 - 应付欠款)
-              </div>
-              <div>
-                131,507.10
-              </div>
-              <AssertInfo></AssertInfo>
-            </el-card>
+            <AssertInfo></AssertInfo>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="12">
             <el-card>
