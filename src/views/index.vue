@@ -205,7 +205,10 @@
 
         <el-row :gutter="0"  class="outer-row ">
           <el-col :xs="24" :sm="24" :md="12" :lg="24">
-            <el-card> 数据概览</el-card>
+            <el-card>
+              <template #header>数据概览</template>
+              <div ref="chartRef" style="width: 100%; height: 400px;"></div>
+            </el-card>
           </el-col>
         </el-row>
 
@@ -261,16 +264,77 @@
 
 <script setup name="Index">
 import {Sell, SoldOut, TakeawayBox, Box, User, Avatar, PieChart, Printer} from '@element-plus/icons-vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import * as echarts from 'echarts';
+
+const chartRef = ref(null);
+let chartInstance = null;
+
+const salesData = [
+  { date: '2024-07-01', sales: 120 },
+  { date: '2024-07-02', sales: 132 },
+  { date: '2024-07-03', sales: 101 },
+  { date: '2024-07-04', sales: 134 },
+  { date: '2024-07-05', sales: 90 },
+  { date: '2024-07-06', sales: 230 },
+  { date: '2024-07-07', sales: 210 }
+];
+
+const setupChart = () => {
+  if (chartRef.value) {
+    chartInstance = echarts.init(chartRef.value);
+    const option = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          crossStyle: {
+            color: '#999'
+          }
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: salesData.map(item => item.date)
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: '销售额',
+          type: 'line',
+          data: salesData.map(item => item.sales),
+          label: {
+            show: true,
+            position: 'top'
+          }
+        }
+      ]
+    };
+    chartInstance.setOption(option);
+  }
+};
+
+onMounted(() => {
+  setupChart();
+  window.addEventListener('resize', resizeChart);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', resizeChart);
+  if (chartInstance) {
+    chartInstance.dispose();
+  }
+});
+
+const resizeChart = () => {
+  if (chartInstance) {
+    chartInstance.resize();
+  }
+};
 
 const version = ref('4.0.0')
-
-function goTarget(url) {
-  window.open(url, '__blank')
-}
-
-const handleTodaySale = () => {
-  console.log('今日销售情况')
-}
 
 </script>
 
