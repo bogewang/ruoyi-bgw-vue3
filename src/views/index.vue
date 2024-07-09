@@ -1,6 +1,6 @@
 <template>
   <div class="app-container home">
-    <el-row gutter="20">
+    <el-row :gutter="20">
       <el-col :xs="24" :sm="24" :md="12" :lg="20">
         <el-row class="outer-row sale">
           <el-col :xs="24" :sm="24" :md="12" :lg="8">
@@ -134,7 +134,7 @@
           </el-col>
         </el-row>
 
-        <el-row class="outer-row" gutter="20">
+        <el-row class="outer-row" :gutter="20">
           <el-col :xs="24" :sm="24" :md="12" :lg="12">
             <el-card style="padding-bottom: 8px">
               <template #header>
@@ -203,7 +203,7 @@
           </el-col>
         </el-row>
 
-        <el-row :gutter="0"  class="outer-row">
+        <el-row :gutter="0"  class="outer-row ">
           <el-col :xs="24" :sm="24" :md="12" :lg="24">
             <el-card> 数据概览</el-card>
           </el-col>
