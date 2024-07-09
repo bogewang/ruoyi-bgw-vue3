@@ -21,8 +21,8 @@ const chartRef = ref(null);
 let chartInstance = null;
 
 const assetData = [
-  { name: '账户余额', value: 1000 },
   { name: '库存总额', value: 8000 },
+  { name: '账户余额', value: 1000 },
   { name: '应收欠款', value: 400 },
   { name: '应付欠款', value: 100 }
 ];
