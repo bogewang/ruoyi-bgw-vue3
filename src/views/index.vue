@@ -284,7 +284,6 @@ const chartRefs = ref([]);
 const setupChart = async () => {
   await nextTick();
   charts.forEach((chart, index) => {
-    console.log('setupChart')
     const chartDom = document.getElementById('chart' + index);
     if (chartDom) {
       const myChart = echarts.init(chartDom);
