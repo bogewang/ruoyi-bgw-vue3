@@ -222,8 +222,16 @@
         <el-row class="outer-row">
           <el-col :xs="24" :sm="24" :md="12" :lg="12">
             <el-card>
-              <div>资产情况</div>
-              <el-divider/>
+              <template #header>
+                资产情况
+              </template>
+              <div>
+                总资产(= 账户余额 + 库存总额 + 应收欠款 - 应付欠款)
+              </div>
+              <div>
+                131,507.10
+              </div>
+              <AssertInfo></AssertInfo>
             </el-card>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="12">
@@ -273,6 +281,7 @@
 import {Sell, SoldOut, TakeawayBox, Box, User, Avatar, PieChart, Printer} from '@element-plus/icons-vue'
 import { ref, onMounted, nextTick } from 'vue';
 import * as echarts from 'echarts';
+import AssertInfo from './index/assetInfo.vue'
 
 const charts = [
   { title: '销售额1', data: [{ date: '2024-07-01', sales: 120 }, { date: '2024-07-02', sales: 132 }, { date: '2024-07-03', sales: 101 }, { date: '2024-07-04', sales: 134 }, { date: '2024-07-05', sales: 90 }, { date: '2024-07-06', sales: 230 }, { date: '2024-07-07', sales: 210 }] },
