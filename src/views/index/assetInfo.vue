@@ -27,7 +27,11 @@ const setupChart = () => {
       legend: {
         top: 'middle',
         left: 'left',
-        orient: 'vertical'
+        orient: 'vertical',
+        formatter: name => {
+          const item = assetData.find(data => data.name === name);
+          return `${name} (${item.value})`;
+        }
       },
       series: [
         {
@@ -35,12 +39,16 @@ const setupChart = () => {
           type: 'pie',
           radius: '50%',
           data: assetData,
+          center: ['60%', '50%'],
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
               shadowOffsetX: 0,
               shadowColor: 'rgba(0, 0, 0, 0.5)'
             }
+          },
+          label: {
+            formatter: '{b}: {d}%'
           }
         }
       ]
@@ -68,6 +76,6 @@ const resizeChart = () => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 /* 添加必要的样式 */
 </style>
