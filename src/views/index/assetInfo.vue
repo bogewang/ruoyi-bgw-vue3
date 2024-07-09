@@ -25,8 +25,9 @@ const setupChart = () => {
         formatter: '{a} <br/>{b} : {c} ({d}%)'
       },
       legend: {
-        top: '5%',
-        left: 'center'
+        top: 'middle',
+        left: 'left',
+        orient: 'vertical'
       },
       series: [
         {
