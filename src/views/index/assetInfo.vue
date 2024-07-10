@@ -9,7 +9,7 @@
     <p class="font22">
       131,507.10
     </p>
-    <div ref="chartRef" style="width: 100%; height: 350px;"></div>
+    <div ref="assetChartRef" style="width: 100%; height: 350px;"></div>
   </el-card>
 </template>
 
@@ -17,7 +17,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import * as echarts from 'echarts';
 
-const chartRef = ref(null);
+const assetChartRef = ref(null);
 let chartInstance = null;
 
 const assetData = [
@@ -28,8 +28,8 @@ const assetData = [
 ];
 
 const setupChart = () => {
-  if (chartRef.value) {
-    chartInstance = echarts.init(chartRef.value);
+  if (assetChartRef.value) {
+    chartInstance = echarts.init(assetChartRef.value);
     const option = {
       tooltip: {
         trigger: 'item',

@@ -214,15 +214,12 @@
           </el-col>
         </el-row>
 
-        <el-row class="outer-row">
+        <el-row class="outer-row" :gutter="20">
           <el-col :xs="24" :sm="24" :md="12" :lg="12">
             <AssertInfo></AssertInfo>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="12">
-            <el-card>
-              <div>现金流趋势</div>
-              <el-divider/>
-            </el-card>
+            <CashTrend></CashTrend>
           </el-col>
         </el-row>
       </el-col>
@@ -266,7 +263,7 @@ import {Sell, SoldOut, TakeawayBox, Box, User, Avatar, PieChart, Printer} from '
 
 import AssertInfo from '@/views/index/assetInfo.vue'
 import SaleInfo from '@/views/index/saleInfo.vue'
-
+import CashTrend from '@/views/index/cashTrend.vue'
 const version = ref('4.0.0')
 
 </script>
