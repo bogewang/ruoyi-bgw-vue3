@@ -264,6 +264,9 @@ import {Sell, SoldOut, TakeawayBox, Box, User, Avatar, PieChart, Printer} from '
 import AssertInfo from '@/views/index/assetInfo.vue'
 import SaleInfo from '@/views/index/saleInfo.vue'
 import CashTrend from '@/views/index/cashTrend.vue'
+import { ref } from 'vue'
+
+// eslint-disable-next-line no-unused-vars
 const version = ref('4.0.0')
 
 </script>
