@@ -19,13 +19,17 @@ export default [
 			globals: {
 				...globals.browser,
 				...globals.es2020,
-				...globals.node,
+				...globals.node
 			},
 			ecmaVersion: 2020,
 			parser: parserVue,
 			parserOptions: {
-				parser: tseslint.parser,
-			},
+				parser: tseslint.parser
+			}
 		},
-	},
+		rules: {
+			'no-undef': 0,
+			'no-debugger': 0
+		}
+	}
 ]

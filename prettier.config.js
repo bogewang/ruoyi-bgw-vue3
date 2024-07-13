@@ -73,7 +73,7 @@ export default {
 	 * @default "always"
 	 * @type {'always'|'avoid'}
 	 */
-	arrowParens: 'always',
+	arrowParens: 'avoid',
 	/**
 	 * 为HTML、Vue、Angular和Handlebars指定全局空格敏感性
 	 * @default "css"

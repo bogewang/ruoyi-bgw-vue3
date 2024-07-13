@@ -1,34 +1,84 @@
 <template>
 	<div class="app-container home">
 		<el-row :gutter="20">
-			<el-col :xs="24" :sm="24" :md="12" :lg="20">
+			<el-col
+				:xs="24"
+				:sm="24"
+				:md="12"
+				:lg="20"
+			>
 				<el-row class="outer-row sale">
-					<el-col :xs="24" :sm="24" :md="12" :lg="8">
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="8"
+					>
 						<el-card shadow="hover">
 							<p>
 								<span>
-									<el-text class="mx-1" size="large" tag="b">¥3000.00</el-text>
+									<el-text
+										class="mx-1"
+										size="large"
+										tag="b"
+									>
+										¥{{ saleToday }}
+									</el-text>
 								</span>
-								<el-text class="mx-1" size="small" style="margin-left: 5px">昨日 2000.23</el-text>
+								<el-text
+									class="mx-1"
+									size="small"
+									style="margin-left: 5px"
+								>
+									昨日 {{ saleYestoday }}
+								</el-text>
 							</p>
 							<el-text class="mx-1">今日销售额</el-text>
 						</el-card>
 					</el-col>
-					<el-col :xs="24" :sm="24" :md="12" :lg="8">
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="8"
+					>
 						<el-card shadow="hover">
 							<p>
 								<span>
-									<el-text class="mx-1" size="large" tag="b">¥3000.00</el-text>
+									<el-text
+										class="mx-1"
+										size="large"
+										tag="b"
+									>
+										¥{{ grossProfitToday }}
+									</el-text>
 								</span>
-								<el-text class="mx-1" size="small" style="margin-left: 5px">昨日 2000.23</el-text>
+								<el-text
+									class="mx-1"
+									size="small"
+									style="margin-left: 5px"
+								>
+									昨日 {{ grossProfitYestoday }}
+								</el-text>
 							</p>
 							<el-text class="mx-1">今日销售毛利</el-text>
 						</el-card>
 					</el-col>
-					<el-col :xs="24" :sm="24" :md="12" :lg="8">
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="8"
+					>
 						<el-card shadow="hover">
 							<p>
-								<el-text class="mx-1" size="large" tag="b">100</el-text>
+								<el-text
+									class="mx-1"
+									size="large"
+									tag="b"
+								>
+									{{ saleCountToday }}
+								</el-text>
 							</p>
 							<el-text class="mx-1">今日销售笔数</el-text>
 						</el-card>
@@ -36,7 +86,12 @@
 				</el-row>
 
 				<el-row class="outer-row module">
-					<el-col :xs="24" :sm="24" :md="12" :lg="6">
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="6"
+					>
 						<el-card shadow="hover">
 							<p>
 								<el-icon>
@@ -46,7 +101,12 @@
 							<p>销售</p>
 						</el-card>
 					</el-col>
-					<el-col :xs="24" :sm="24" :md="12" :lg="6">
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="6"
+					>
 						<el-card shadow="hover">
 							<p>
 								<el-icon>
@@ -56,7 +116,12 @@
 							<p>进货</p>
 						</el-card>
 					</el-col>
-					<el-col :xs="24" :sm="24" :md="12" :lg="6">
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="6"
+					>
 						<el-card shadow="hover">
 							<p>
 								<el-icon>
@@ -66,7 +131,12 @@
 							<p>库存</p>
 						</el-card>
 					</el-col>
-					<el-col :xs="24" :sm="24" :md="12" :lg="6">
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="6"
+					>
 						<el-card shadow="hover">
 							<p>
 								<el-icon>
@@ -76,7 +146,12 @@
 							<p>商品</p>
 						</el-card>
 					</el-col>
-					<el-col :xs="24" :sm="24" :md="12" :lg="6">
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="6"
+					>
 						<el-card shadow="hover">
 							<p>
 								<el-icon>
@@ -86,7 +161,12 @@
 							<p>客户</p>
 						</el-card>
 					</el-col>
-					<el-col :xs="24" :sm="24" :md="12" :lg="6">
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="6"
+					>
 						<el-card shadow="hover">
 							<p>
 								<el-icon color="#409efc">
@@ -96,7 +176,12 @@
 							<p>供应商</p>
 						</el-card>
 					</el-col>
-					<el-col :xs="24" :sm="24" :md="12" :lg="6">
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="6"
+					>
 						<el-card shadow="hover">
 							<p>
 								<el-icon>
@@ -106,7 +191,12 @@
 							<p>销售报表</p>
 						</el-card>
 					</el-col>
-					<el-col :xs="24" :sm="24" :md="12" :lg="6">
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="6"
+					>
 						<el-card shadow="hover">
 							<p>
 								<el-icon>
@@ -118,88 +208,187 @@
 					</el-col>
 				</el-row>
 
-				<el-row class="outer-row" :gutter="20">
-					<el-col :xs="24" :sm="24" :md="12" :lg="12">
+				<el-row
+					class="outer-row"
+					:gutter="20"
+				>
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="12"
+					>
 						<el-card style="padding-bottom: 8px">
 							<template #header>
 								<div>常用功能</div>
 							</template>
 							<el-row class="ofen-use text-center">
-								<el-col :xs="24" :sm="24" :md="12" :lg="8">
-									<el-card> 进货单报表</el-card>
+								<el-col
+									:xs="24"
+									:sm="24"
+									:md="12"
+									:lg="8"
+								>
+									<el-card>进货单报表</el-card>
 								</el-col>
-								<el-col :xs="24" :sm="24" :md="12" :lg="8">
-									<el-card> 销售单报表</el-card>
+								<el-col
+									:xs="24"
+									:sm="24"
+									:md="12"
+									:lg="8"
+								>
+									<el-card>销售单报表</el-card>
 								</el-col>
-								<el-col :xs="24" :sm="24" :md="12" :lg="8">
-									<el-card> 库存查询</el-card>
+								<el-col
+									:xs="24"
+									:sm="24"
+									:md="12"
+									:lg="8"
+								>
+									<el-card>库存查询</el-card>
 								</el-col>
-								<el-col :xs="24" :sm="24" :md="12" :lg="8">
-									<el-card> 商品利润表</el-card>
+								<el-col
+									:xs="24"
+									:sm="24"
+									:md="12"
+									:lg="8"
+								>
+									<el-card>商品利润表</el-card>
 								</el-col>
-								<el-col :xs="24" :sm="24" :md="12" :lg="8">
-									<el-card> 销售利润表</el-card>
+								<el-col
+									:xs="24"
+									:sm="24"
+									:md="12"
+									:lg="8"
+								>
+									<el-card>销售利润表</el-card>
 								</el-col>
-								<el-col :xs="24" :sm="24" :md="12" :lg="8">
-									<el-card> 客户管理</el-card>
+								<el-col
+									:xs="24"
+									:sm="24"
+									:md="12"
+									:lg="8"
+								>
+									<el-card>客户管理</el-card>
 								</el-col>
-								<el-col :xs="24" :sm="24" :md="12" :lg="8">
-									<el-card> 商品管理</el-card>
+								<el-col
+									:xs="24"
+									:sm="24"
+									:md="12"
+									:lg="8"
+								>
+									<el-card>商品管理</el-card>
 								</el-col>
 							</el-row>
 						</el-card>
 					</el-col>
-					<el-col :xs="24" :sm="24" :md="12" :lg="12">
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="12"
+					>
 						<el-card>
 							<template #header>
 								<div>汇总信息</div>
 							</template>
 							<el-row class="summary">
-								<el-col :xs="24" :sm="24" :md="12" :lg="8">
+								<el-col
+									:xs="24"
+									:sm="24"
+									:md="12"
+									:lg="8"
+								>
 									<el-card>
 										<div>客户总数</div>
 										<div class="summary-num">11123</div>
 									</el-card>
 								</el-col>
-								<el-col :xs="24" :sm="24" :md="12" :lg="8">
-									<el-card> 销售单报表</el-card>
+								<el-col
+									:xs="24"
+									:sm="24"
+									:md="12"
+									:lg="8"
+								>
+									<el-card>销售单报表</el-card>
 								</el-col>
-								<el-col :xs="24" :sm="24" :md="12" :lg="8">
-									<el-card> 库存查询</el-card>
+								<el-col
+									:xs="24"
+									:sm="24"
+									:md="12"
+									:lg="8"
+								>
+									<el-card>库存查询</el-card>
 								</el-col>
-								<el-col :xs="24" :sm="24" :md="12" :lg="8">
+								<el-col
+									:xs="24"
+									:sm="24"
+									:md="12"
+									:lg="8"
+								>
 									<el-card>
 										<div>客户总数</div>
 										<div class="summary-num">11123</div>
 									</el-card>
 								</el-col>
-								<el-col :xs="24" :sm="24" :md="12" :lg="8">
-									<el-card> 销售利润表</el-card>
+								<el-col
+									:xs="24"
+									:sm="24"
+									:md="12"
+									:lg="8"
+								>
+									<el-card>销售利润表</el-card>
 								</el-col>
 							</el-row>
 						</el-card>
 					</el-col>
 				</el-row>
 
-				<el-row :gutter="0" class="outer-row">
-					<el-col :xs="24" :sm="24" :md="12" :lg="24">
+				<el-row
+					:gutter="0"
+					class="outer-row"
+				>
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="24"
+					>
 						<el-card>
-							<template #header> 数据概览 </template>
+							<template #header>数据概览</template>
 							<SaleInfo></SaleInfo>
 						</el-card>
 					</el-col>
 				</el-row>
 
-				<el-row class="outer-row" :gutter="20">
-					<el-col :xs="24" :sm="24" :md="12" :lg="12">
+				<el-row
+					class="outer-row"
+					:gutter="20"
+				>
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="12"
+					>
 						<AssertInfo></AssertInfo>
 					</el-col>
-					<el-col :xs="24" :sm="24" :md="12" :lg="12">
+					<el-col
+						:xs="24"
+						:sm="24"
+						:md="12"
+						:lg="12"
+					>
 						<CashTrend></CashTrend>
 					</el-col>
 				</el-row>
 			</el-col>
-			<el-col :xs="24" :sm="24" :md="12" :lg="4">
+			<el-col
+				:xs="24"
+				:sm="24"
+				:md="12"
+				:lg="4"
+			>
 				<el-card class="right-card">
 					<template #header>
 						<div>新手向导</div>
@@ -235,10 +424,28 @@ import { Sell, SoldOut, TakeawayBox, Box, User, Avatar, PieChart, Printer } from
 import AssertInfo from '@/views/index/assetInfo.vue'
 import SaleInfo from '@/views/index/saleInfo.vue'
 import CashTrend from '@/views/index/cashTrend.vue'
-import { ref } from 'vue'
+import { queryHome } from '@/api/index.js'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const version = ref('4.0.0')
+const saleToday = ref(0)
+const saleYestoday = ref(0)
+const grossProfitToday = ref(0)
+const grossProfitYestoday = ref(0)
+const saleCountToday = ref(0)
+
+const initHome = () => {
+	queryHome().then(res => {
+		const summary = res.saleSummaryDTO
+		saleToday.value = summary.saleToday
+		saleYestoday.value = summary.saleYestoday
+		grossProfitToday.value = summary.grossProfitToday
+		grossProfitYestoday.value = summary.grossProfitYestoday
+		saleCountToday.value = summary.saleCountToday
+	})
+}
+
+initHome()
 </script>
 
 <style scoped lang="scss">
@@ -260,6 +467,7 @@ const version = ref('4.0.0')
 			padding: 5px;
 		}
 	}
+
 	.sale .el-card {
 		@extend .el-card-common;
 	}
@@ -270,6 +478,7 @@ const version = ref('4.0.0')
 			@extend .el-card-common;
 			margin: 5px;
 		}
+
 		.summary-num {
 			font-size: 22px;
 			padding-top: 10px;
