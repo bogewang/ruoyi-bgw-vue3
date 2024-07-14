@@ -22,7 +22,7 @@
 										size="large"
 										tag="b"
 									>
-										¥{{ saleToday }}
+										¥{{ summary.saleToday }}
 									</el-text>
 								</span>
 								<el-text
@@ -30,7 +30,7 @@
 									size="small"
 									style="margin-left: 5px"
 								>
-									昨日 {{ saleYestoday }}
+									昨日 {{ summary.saleYestoday }}
 								</el-text>
 							</p>
 							<el-text class="mx-1">今日销售额</el-text>
@@ -50,7 +50,7 @@
 										size="large"
 										tag="b"
 									>
-										¥{{ grossProfitToday }}
+										¥{{ summary.grossProfitToday }}
 									</el-text>
 								</span>
 								<el-text
@@ -58,7 +58,7 @@
 									size="small"
 									style="margin-left: 5px"
 								>
-									昨日 {{ grossProfitYestoday }}
+									昨日 {{ summary.grossProfitYestoday }}
 								</el-text>
 							</p>
 							<el-text class="mx-1">今日销售毛利</el-text>
@@ -77,7 +77,7 @@
 									size="large"
 									tag="b"
 								>
-									{{ saleCountToday }}
+									{{ summary.saleCountToday }}
 								</el-text>
 							</p>
 							<el-text class="mx-1">今日销售笔数</el-text>
@@ -428,20 +428,11 @@ import { queryHome } from '@/api/index.js'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const version = ref('4.0.0')
-const saleToday = ref(0)
-const saleYestoday = ref(0)
-const grossProfitToday = ref(0)
-const grossProfitYestoday = ref(0)
-const saleCountToday = ref(0)
+const summary = ref({})
 
 const initHome = () => {
 	queryHome().then(res => {
-		const summary = res.saleSummaryDTO
-		saleToday.value = summary.saleToday
-		saleYestoday.value = summary.saleYestoday
-		grossProfitToday.value = summary.grossProfitToday
-		grossProfitYestoday.value = summary.grossProfitYestoday
-		saleCountToday.value = summary.saleCountToday
+		summary.value = { ...res.saleSummaryDTO }
 	})
 }
 
