@@ -55,7 +55,7 @@ export default {
    * @default "es5"
    * @type {'es5'|'none'|'all'}
    */
-  trailingComma: 'none',
+  trailingComma: 'all',
   /**
    * 在对象，数组括号与文字之间加空格 "{ foo: bar }"
    * @default true
@@ -103,6 +103,6 @@ export default {
    * @default true
    * @type {boolean}
    */
-  singleAttributePerLine: true,
-  disableLanguages: ['html']
+  singleAttributePerLine: false,
+  disableLanguages: ['html'],
 }
