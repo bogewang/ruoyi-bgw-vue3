@@ -30,22 +30,13 @@
 
 <script setup name="SalesDocumentQuery">
 import { reactive } from 'vue'
+import { listRepository } from '@/api/repository/repository.js'
+import { listCustomer } from '@/api/customer/customer.js'
+import { listUser } from '@/api/system/user.js'
 
-const receiptType = [
-  { value: '仓库1', label: '仓库1' },
-  { value: '仓库2', label: '仓库2' },
-  { value: '仓库3', label: '仓库3' },
-]
-const customerList = [
-  { value: '客户1', label: '客户1' },
-  { value: '客户2', label: '客户2' },
-  { value: '客户3', label: '客户3' },
-]
-const operatorList = [
-  { value: '张三', label: '张三' },
-  { value: '李四', label: '李四' },
-  { value: '王五', label: '王五' },
-]
+const receiptType = listRepository()
+const customerList = listCustomer()
+const operatorList = listUser({})
 const queryParams = reactive({
   user: '',
   region: '',
