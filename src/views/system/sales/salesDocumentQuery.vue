@@ -1,58 +1,45 @@
 <template>
   <div class="app-container">
     <el-form :inline="true" :model="queryParams" class="demo-form-inline" label-width="80px" @keyup.enter="searchQuery">
-      <el-row>
-        <el-col :span="18">
-          <el-row>
-            <el-col :span="6">
-              <el-form-item size="large" label="单据号">
-                <el-input v-model="queryParams.billNum" size="large" clearable />
-              </el-form-item>
-            </el-col>
-
-            <el-col :span="6">
-              <el-form-item size="large" label="仓库">
-                <el-select v-model="queryParams.repo" size="large" clearable>
-                  <el-option v-for="dict in receiptType" :key="dict.value" :label="dict.label" :value="dict.value" />
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="客户">
-                <el-select v-model="queryParams.customer" clearable>
-                  <el-option v-for="dict in customerList" :key="dict.value" :label="dict.label" :value="dict.value" />
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-button-group>
-                <el-button>搜索</el-button>
-                <el-button>高级</el-button>
-              </el-button-group>
-            </el-col>
-          </el-row>
+      <el-row class="btn-row">
+        <el-col :span="4">
+          <el-form-item size="large" label="单据号">
+            <el-input v-model="queryParams.billNum" size="large" clearable />
+          </el-form-item>
         </el-col>
 
-        <el-col :span="6">
-          <el-button-group>
-            <el-button>便捷收款</el-button>
-            <el-button>审核</el-button>
-            <el-button>取消审核</el-button>
-            <el-button>删除</el-button>
-            <el-button>新增</el-button>
+        <el-col :span="4">
+          <el-form-item size="large" label="仓库">
+            <el-select v-model="queryParams.repo" size="large" clearable>
+              <el-option v-for="dict in receiptType" :key="dict.value" :label="dict.label" :value="dict.value" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item label="客户">
+            <el-select v-model="queryParams.customer" size="large" clearable>
+              <el-option v-for="dict in customerList" :key="dict.value" :label="dict.label" :value="dict.value" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-button-group size="large">
+            <el-button type="primary" @click="onSubmit">搜索</el-button>
+            <el-button>高级</el-button>
+          </el-button-group>
+        </el-col>
+
+        <el-col :span="8">
+          <el-button-group size="large" class="operate-btn-group">
+            <el-button color="#009688">便捷收款</el-button>
+            <el-button color="#009688">审核</el-button>
+            <el-button color="#009688">取消审核</el-button>
+            <el-button color="#009688">删除</el-button>
+            <el-button type="primary">新增</el-button>
             <el-button>导出</el-button>
           </el-button-group>
         </el-col>
       </el-row>
-
-      <el-form-item label="操作人">
-        <el-select v-model="queryParams.operator" clearable>
-          <el-option v-for="dict in operatorList" :key="dict.value" :label="dict.label" :value="dict.value" />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">Query</el-button>
-      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -81,12 +68,16 @@ const onSubmit = () => {
 }
 </script>
 
-<style>
-.demo-form-inline .el-input {
-  --el-input-width: 220px;
-}
-
-.demo-form-inline .el-select {
-  --el-select-width: 220px;
+<style lang="scss">
+.app-container {
+  .btn-row {
+    background: #ffffff;
+    padding: 10px 0;
+    margin: 0 15px;
+  }
+  .operate-btn-group {
+    display: inline-block;
+    text-align: right;
+  }
 }
 </style>
