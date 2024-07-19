@@ -26,7 +26,7 @@ export default {
    * @default true
    * @type {boolean}
    */
-  semi: false,
+  semi: true,
   /**
    * 是否使用单引号替代双引号
    * @default false
