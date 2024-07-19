@@ -67,12 +67,13 @@
       <!-- 分页-->
       <div class="demo-pagination-block">
         <el-pagination
-          v-model:current-page="currentPage4"
-          v-model:page-size="pageSize4"
-          :page-sizes="[100, 200, 300, 400]"
+          v-model:current-page="currentPage"
+          v-model:page-size="pageSize"
+          :page-sizes="[10, 20, 50, 100]"
           size="large"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          :total="totalRows"
+          style="justify-content: flex-end; margin-right: 10px"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
         />
@@ -88,18 +89,33 @@ import { listCustomer } from '@/api/customer/customer.js'
 import { listSales } from '@/api/sales/sales.js'
 import { computed, ref } from 'vue'
 
-const currentPage4 = 2
-const pageSize4 = 100
+const tableData = ref([])
+const currentPage = ref(1)
+const pageSize = ref(10)
+const totalRows = ref(0)
+const handleCurrentChange = () => {
+  tableData.value = listSales(currentPage, pageSize).data
+}
+
+const handleSizeChange = () => {
+  tableData.value = listSales(currentPage, pageSize).data
+}
 const searchQuery = () => {
   console.log('搜索')
 }
-const handleSizeChange = () => {
-  console.log('size发生变化!')
-}
-const handleCurrentChange = () => {
-  console.log('当前页发生变化')
-}
-const tableData = ref([])
+
+const pageResult = listSales(currentPage, pageSize)
+tableData.value = pageResult.data
+totalRows.value = pageResult.totalRows
+
+const minHeight = 400 // 最小高度
+const tableHeight = computed(() => {
+  const rowHeight = 48 // 估算每行的高度
+  const numberOfRows = tableData.value.length
+  const totalHeight = rowHeight * numberOfRows
+  return totalHeight < minHeight ? minHeight : totalHeight
+})
+
 const receiptType = listRepository()
 const customerList = listCustomer()
 const queryParams = reactive({
@@ -111,22 +127,13 @@ const queryParams = reactive({
 const onSubmit = () => {
   console.log('submit!')
 }
-
-tableData.value = listSales()
-const minHeight = 400 // 最小高度
-const tableHeight = computed(() => {
-  debugger
-  const rowHeight = 48 // 估算每行的高度
-  const numberOfRows = tableData.value.length
-  const totalHeight = rowHeight * numberOfRows
-  return totalHeight < minHeight ? minHeight : totalHeight
-})
 </script>
 
 <style lang="scss" scoped>
 .app-container {
   .demo-pagination-block {
     margin-top: 10px;
+    display: flex;
   }
 
   .el-table {
