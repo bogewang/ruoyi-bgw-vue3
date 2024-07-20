@@ -26,7 +26,7 @@
           <el-col :span="4">
             <el-form-item label="客户">
               <el-select v-model="order.customer" clearable>
-                <el-option v-for="dict in customerList" :key="dict.value" :label="dict.label" :value="dict.value" />
+                <el-option v-for="dict in customerList" :key="dict.id" :label="dict.name" :value="dict.id" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -43,12 +43,12 @@
           <el-col :span="4">
             <el-form-item label-width="10px">
               <el-checkbox label="需要发票" />
-              <el-checkbox label="送货" />
+              <el-checkbox v-model="order.needDeliver" label="送货" />
             </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row>
+        <el-row v-if="order.needDeliver">
           <el-col :span="4">
             <el-form-item label="送货日期">
               <el-date-picker v-model="order.deliverDate"></el-date-picker>
@@ -56,21 +56,16 @@
           </el-col>
           <el-col :span="4">
             <el-form-item label="联系人">
-              <el-input></el-input>
+              <el-input v-model="order.linkman"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item label="联系方式">
-              <el-input-number></el-input-number>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-form-item label="联系地址">
-              <el-input></el-input>
+              <el-input v-model="order.mobile"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-button class="use-customer-address">使用客户地址</el-button>
+            <el-button class="use-customer-address" @click="useCustomerAddress">使用客户地址</el-button>
           </el-col>
         </el-row>
 
@@ -145,15 +140,29 @@ import { ref } from 'vue';
 import { CirclePlusFilled, RemoveFilled } from '@element-plus/icons-vue';
 import { listCustomer } from '@/api/customer/customer.js';
 import { format } from 'date-fns';
+import { ElMessage } from 'element-plus';
 
 const order = ref({
   orderTime: new Date(),
   deliverDate: new Date(),
   orderNum: 'XSD' + format(new Date(), 'yyyyMMddHHmmss'),
+  needDeliver: false,
 });
-const price = ref();
 
 const customerList = listCustomer();
+const useCustomerAddress = () => {
+  if (!order.value.customer) {
+    ElMessage({
+      message: '请先选择客户',
+      type: 'error',
+      plain: true,
+    });
+    return;
+  }
+  order.value.linkman = customerList.find(item => item.id === order.value.customer).linkman;
+  order.value.mobile = customerList.find(item => item.id === order.value.customer).mobile;
+};
+const price = ref();
 
 const tableData = ref([{}, {}, {}, {}, {}, {}, {}, {}]);
 </script>
