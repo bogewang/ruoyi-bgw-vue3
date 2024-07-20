@@ -224,11 +224,11 @@ export function listSales(currentPage, pageSize) {
       address: 'No. 189, Grove St, Los Angeles',
       zip: 'CA 90036',
     },
-  ]
+  ];
 
-  const data2 = data.slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value)
+  const data2 = data.slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value);
   return {
     totalRows: data.length,
     data: data2,
-  }
+  };
 }

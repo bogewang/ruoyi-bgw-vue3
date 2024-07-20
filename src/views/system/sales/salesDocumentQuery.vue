@@ -54,33 +54,43 @@
         <el-button>导出</el-button>
       </el-button-group>
 
-      <el-table :data="tableData" border show-summary style="width: 100%" highlight-current-row index fit>
+      <el-table
+        :data="tableData"
+        border
+        show-summary
+        style="width: 100%"
+        highlight-current-row
+        index
+        fit
+        :header-cell-style="{ 'text-align': 'center' }"
+        :cell-style="{ 'text-align': 'center' }"
+      >
         <el-table-column fixed type="selection" width="55" />
-        <el-table-column prop="date" label="Date" width="100" />
-        <el-table-column prop="name" label="Name" width="100" />
-        <el-table-column prop="state" label="State" width="100" />
-        <el-table-column prop="city" label="City" width="150" />
-        <el-table-column prop="zip" label="Zip" width="100" />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="date" label="Date" width="100" />
+        <el-table-column sortable prop="name" label="Name" width="100" />
+        <el-table-column sortable prop="state" label="State" width="100" />
+        <el-table-column sortable prop="city" label="City" width="150" />
+        <el-table-column sortable prop="zip" label="Zip" width="100" />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
         <el-table-column fixed="right" prop="operate" label="操作" width="250">
           <el-button-group>
             <el-button class="row-operate-btn">查看</el-button>
@@ -110,50 +120,42 @@
 </template>
 
 <script setup name="SalesDocumentQuery">
-import { reactive } from 'vue'
-import { listRepository } from '@/api/repository/repository.js'
-import { listCustomer } from '@/api/customer/customer.js'
-import { listSales } from '@/api/sales/sales.js'
-import { computed, ref } from 'vue'
+import { reactive } from 'vue';
+import { listRepository } from '@/api/repository/repository.js';
+import { listCustomer } from '@/api/customer/customer.js';
+import { listSales } from '@/api/sales/sales.js';
+import { ref } from 'vue';
 
-const tableData = ref([])
-const currentPage = ref(1)
-const pageSize = ref(10)
-const totalRows = ref(0)
+const tableData = ref([]);
+const currentPage = ref(1);
+const pageSize = ref(10);
+const totalRows = ref(0);
 const handleCurrentChange = () => {
-  tableData.value = listSales(currentPage, pageSize).data
-}
+  tableData.value = listSales(currentPage, pageSize).data;
+};
 
 const handleSizeChange = () => {
-  tableData.value = listSales(currentPage, pageSize).data
-}
+  tableData.value = listSales(currentPage, pageSize).data;
+};
 const searchQuery = () => {
-  console.log('搜索')
-}
+  console.log('搜索');
+};
 
-const pageResult = listSales(currentPage, pageSize)
-tableData.value = pageResult.data
-totalRows.value = pageResult.totalRows
+const pageResult = listSales(currentPage, pageSize);
+tableData.value = pageResult.data;
+totalRows.value = pageResult.totalRows;
 
-const minHeight = 400 // 最小高度
-const tableHeight = computed(() => {
-  const rowHeight = 48 // 估算每行的高度
-  const numberOfRows = tableData.value.length
-  const totalHeight = rowHeight * numberOfRows
-  return totalHeight < minHeight ? minHeight : totalHeight
-})
-
-const receiptType = listRepository()
-const customerList = listCustomer()
+const receiptType = listRepository();
+const customerList = listCustomer();
 const queryParams = reactive({
   user: '',
   region: '',
   date: '',
-})
+});
 
 const onSubmit = () => {
-  console.log('submit!')
-}
+  console.log('submit!');
+};
 </script>
 
 <style lang="scss" scoped>
@@ -180,6 +182,9 @@ const onSubmit = () => {
   .el-card {
     margin-bottom: 10px;
     background: #ffffff;
+  }
+  .el-card:last-child {
+    margin-bottom: 0;
   }
 }
 </style>
