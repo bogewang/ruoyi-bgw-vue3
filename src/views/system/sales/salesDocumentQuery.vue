@@ -6,7 +6,6 @@
         :model="queryParams"
         class="demo-form-inline"
         label-width="80px"
-        size="large"
         @keyup.enter="searchQuery"
       >
         <el-row class="btn-row">
@@ -46,7 +45,7 @@
     </el-card>
 
     <el-card>
-      <el-button-group class="operate-btn-group" size="large">
+      <el-button-group class="operate-btn-group">
         <el-button>便捷收款</el-button>
         <el-button>审核</el-button>
         <el-button>取消审核</el-button>
@@ -55,13 +54,42 @@
         <el-button>导出</el-button>
       </el-button-group>
 
-      <el-table :data="tableData" border show-summary style="width: 100%" :height="tableHeight">
-        <el-table-column fixed prop="date" label="Date" width="150" />
-        <el-table-column prop="name" label="Name" width="120" />
-        <el-table-column prop="state" label="State" width="120" />
-        <el-table-column prop="city" label="City" width="320" />
-        <el-table-column prop="address" label="Address" width="600" />
-        <el-table-column prop="zip" label="Zip" />
+      <el-table :data="tableData" border show-summary style="width: 100%" highlight-current-row index fit>
+        <el-table-column fixed type="selection" width="55" />
+        <el-table-column prop="date" label="Date" width="100" />
+        <el-table-column prop="name" label="Name" width="100" />
+        <el-table-column prop="state" label="State" width="100" />
+        <el-table-column prop="city" label="City" width="150" />
+        <el-table-column prop="zip" label="Zip" width="100" />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column fixed="right" prop="operate" label="操作" width="250">
+          <el-button-group>
+            <el-button class="row-operate-btn">查看</el-button>
+            <el-button class="row-operate-btn">修改</el-button>
+            <el-button class="row-operate-btn">删除</el-button>
+            <el-button class="row-operate-btn">审核</el-button>
+            <el-button class="row-operate-btn">打印</el-button>
+          </el-button-group>
+        </el-table-column>
       </el-table>
 
       <!-- 分页-->
@@ -70,7 +98,6 @@
           v-model:current-page="currentPage"
           v-model:page-size="pageSize"
           :page-sizes="[10, 20, 50, 100]"
-          size="large"
           layout="total, sizes, prev, pager, next, jumper"
           :total="totalRows"
           style="justify-content: flex-end; margin-right: 10px"
@@ -131,6 +158,10 @@ const onSubmit = () => {
 
 <style lang="scss" scoped>
 .app-container {
+  .row-operate-btn {
+    padding: 0 5px !important;
+  }
+
   .demo-pagination-block {
     margin-top: 10px;
     display: flex;
