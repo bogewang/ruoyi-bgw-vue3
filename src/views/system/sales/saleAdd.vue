@@ -42,7 +42,7 @@
           </el-col>
           <el-col :span="4">
             <el-form-item label-width="10px">
-              <el-checkbox label="需要发票" />
+              <el-checkbox v-model="order.needInvoice" label="需要发票" />
               <el-checkbox v-model="order.needDeliver" label="送货" />
             </el-form-item>
           </el-col>
@@ -87,18 +87,30 @@
             <el-table-column prop="name" label="商品名称" width="200">
               <el-input @click="handleProductClick"></el-input>
             </el-table-column>
-            <el-table-column prop="unit" label="单位" width="200" />
-            <el-table-column prop="cost" label="成本价(元)" width="200" />
-            <el-table-column prop="salePrice" label="售价(元)" width="200" />
-            <el-table-column prop="amount" label="金额(元)" width="200" />
-            <el-table-column prop="remark" label="备注" width="200" />
+            <el-table-column prop="unit" label="单位" width="200">
+              <el-input></el-input>
+            </el-table-column>
+            <el-table-column prop="cost" label="成本价(元)" width="200">
+              <el-input></el-input>
+            </el-table-column>
+            <el-table-column prop="salePrice" label="售价(元)" width="200">
+              <el-input></el-input>
+            </el-table-column>
+            <el-table-column prop="amount" label="金额(元)" width="200">
+              <el-input></el-input>
+            </el-table-column>
+            <el-table-column prop="remark" label="备注" width="200">
+              <el-input></el-input>
+            </el-table-column>
           </el-table>
         </el-row>
 
         <el-row>
           <el-col :span="6">
             <el-form-item label="业务员">
-              <el-input></el-input>
+              <el-select v-model="order.salesMan" clearable>
+                <el-option v-for="dict in salesManList" :key="dict.id" :label="dict.name" :value="dict.id" />
+              </el-select>
             </el-form-item>
           </el-col>
 
@@ -112,14 +124,14 @@
 
           <el-col :span="6">
             <el-form-item label="其他费用">
-              <el-input></el-input>
+              <el-input v-model="order.otherExpenses"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="备注信息">
-              <el-input></el-input>
+              <el-input v-model="order.remark"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -129,8 +141,8 @@
           </el-col>
 
           <el-col :span="6" class="save-btn">
-            <el-checkbox>保存后打印</el-checkbox>
-            <el-button type="primary" style="flex: 0 0 70%" size="large">保存</el-button>
+            <el-checkbox v-model="order.needDeliver" label="保存后打印" />
+            <el-button type="primary" style="flex: 0 0 70%" size="large" @click="onSubmit">保存</el-button>
           </el-col>
         </el-row>
         <el-row></el-row>
@@ -147,6 +159,7 @@ import { format } from 'date-fns';
 import { ElMessage } from 'element-plus';
 import { useUserStore } from '@/store/modules/user';
 import { storeToRefs } from 'pinia';
+import { listProduct } from '@/api/product/product.js';
 
 //  制单人
 const userStore = useUserStore();
@@ -180,7 +193,29 @@ const employList = [
   { id: 3, name: '员工2' },
 ];
 
+// 商品信息
+const productList = listProduct();
+// console.log(productList);
+
+// 订单商品信息
 const tableData = ref([{}, {}, {}, {}, {}, {}, {}, {}]);
+
+const handleProductClick = () => {
+  console.log('点击商品名称');
+};
+
+// 业务员
+const salesManList = [
+  { id: 1, name: '销售员1' },
+  { id: 2, name: '销售员2' },
+  { id: 3, name: '销售员3' },
+];
+
+const onSubmit = () => {
+  console.log('保存订单');
+  console.log(order.value);
+  console.log(tableData);
+};
 </script>
 
 <style lang="scss" scoped>

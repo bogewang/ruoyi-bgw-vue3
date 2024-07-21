@@ -71,26 +71,26 @@
         <el-table-column sortable prop="state" label="State" width="100" />
         <el-table-column sortable prop="city" label="City" width="150" />
         <el-table-column sortable prop="zip" label="Zip" width="100" />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
-        <el-table-column sortable prop="address" label="Address" width="200" show-overflow-tooltip />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="address" label="Address" width="200" />
         <el-table-column fixed="right" prop="operate" label="操作" width="250">
           <el-button-group>
             <el-button class="row-operate-btn">查看</el-button>
