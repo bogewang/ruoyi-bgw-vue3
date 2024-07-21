@@ -126,7 +126,6 @@ import { listCustomer } from '@/api/customer/customer.js';
 import { listSales } from '@/api/sales/sales.js';
 import { ref } from 'vue';
 
-const tableData = ref([]);
 const currentPage = ref(1);
 const pageSize = ref(10);
 const totalRows = ref(0);

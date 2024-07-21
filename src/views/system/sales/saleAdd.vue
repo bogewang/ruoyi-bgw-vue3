@@ -21,47 +21,47 @@
         </div>
       </template>
 
-      <el-form label-width="80px" :model="order">
+      <el-form label-width="80px" :model="form">
         <el-row>
           <el-col :span="4">
             <el-form-item label="客户">
-              <el-select v-model="order.customer" clearable>
+              <el-select v-model="form.customer" clearable>
                 <el-option v-for="dict in customerList" :key="dict.id" :label="dict.name" :value="dict.id" />
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item label="单据日期">
-              <el-date-picker v-model="order.orderTime" type="datetime" />
+              <el-date-picker v-model="form.orderTime" type="datetime" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item label="单据编号">
-              <el-input v-model="order.orderNum"></el-input>
+              <el-input v-model="form.orderNum"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item label-width="10px">
-              <el-checkbox v-model="order.needInvoice" label="需要发票" />
-              <el-checkbox v-model="order.needDeliver" label="送货" />
+              <el-checkbox v-model="form.needInvoice" label="需要发票" />
+              <el-checkbox v-model="form.needDeliver" label="送货" />
             </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row v-if="order.needDeliver">
+        <el-row v-if="form.needDeliver">
           <el-col :span="4">
             <el-form-item label="送货日期">
-              <el-date-picker v-model="order.deliverDate"></el-date-picker>
+              <el-date-picker v-model="form.deliverDate"></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item label="联系人">
-              <el-input v-model="order.linkman"></el-input>
+              <el-input v-model="form.linkman"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item label="联系方式">
-              <el-input v-model="order.mobile"></el-input>
+              <el-input v-model="form.mobile"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -71,7 +71,7 @@
 
         <el-row>
           <el-table
-            :data="tableData"
+            :data="form.details"
             border
             show-summary
             style="width: 100%"
@@ -85,22 +85,34 @@
               <el-icon size="large" style="color: red"><RemoveFilled /></el-icon>
             </el-table-column>
             <el-table-column prop="name" label="商品名称" width="200">
-              <el-input @click="handleProductClick"></el-input>
+              <template #default="scope">
+                <el-input v-model="scope.row.name" @click="handleProductClick"></el-input>
+              </template>
             </el-table-column>
             <el-table-column prop="unit" label="单位" width="200">
-              <el-input></el-input>
+              <template #default="scope">
+                <el-input v-model="scope.row.unit"></el-input>
+              </template>
             </el-table-column>
             <el-table-column prop="cost" label="成本价(元)" width="200">
-              <el-input></el-input>
+              <template #default="scope">
+                <el-input v-model="scope.row.cost"></el-input>
+              </template>
             </el-table-column>
             <el-table-column prop="salePrice" label="售价(元)" width="200">
-              <el-input></el-input>
+              <template #default="scope">
+                <el-input v-model="scope.row.salePrice"></el-input>
+              </template>
             </el-table-column>
             <el-table-column prop="amount" label="金额(元)" width="200">
-              <el-input></el-input>
+              <template #default="scope">
+                <el-input v-model="scope.row.amount"></el-input>
+              </template>
             </el-table-column>
             <el-table-column prop="remark" label="备注" width="200">
-              <el-input></el-input>
+              <template #default="scope">
+                <el-input v-model="scope.row.remark"></el-input>
+              </template>
             </el-table-column>
           </el-table>
         </el-row>
@@ -108,7 +120,7 @@
         <el-row>
           <el-col :span="6">
             <el-form-item label="业务员">
-              <el-select v-model="order.salesMan" clearable>
+              <el-select v-model="form.salesMan" clearable>
                 <el-option v-for="dict in salesManList" :key="dict.id" :label="dict.name" :value="dict.id" />
               </el-select>
             </el-form-item>
@@ -116,7 +128,7 @@
 
           <el-col :span="6">
             <el-form-item label="制单人">
-              <el-select v-model="order.maker" clearable>
+              <el-select v-model="form.maker" clearable>
                 <el-option v-for="dict in employList" :key="dict.id" :label="dict.name" :value="dict.id" />
               </el-select>
             </el-form-item>
@@ -124,14 +136,14 @@
 
           <el-col :span="6">
             <el-form-item label="其他费用">
-              <el-input v-model="order.otherExpenses"></el-input>
+              <el-input v-model="form.otherExpenses"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="备注信息">
-              <el-input v-model="order.remark"></el-input>
+              <el-input v-model="form.remark"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -141,7 +153,7 @@
           </el-col>
 
           <el-col :span="6" class="save-btn">
-            <el-checkbox v-model="order.needDeliver" label="保存后打印" />
+            <el-checkbox v-model="form.needDeliver" label="保存后打印" />
             <el-button type="primary" style="flex: 0 0 70%" size="large" @click="onSubmit">保存</el-button>
           </el-col>
         </el-row>
@@ -159,22 +171,23 @@ import { format } from 'date-fns';
 import { ElMessage } from 'element-plus';
 import { useUserStore } from '@/store/modules/user';
 import { storeToRefs } from 'pinia';
-import { listProduct } from '@/api/product/product.js';
+// import { listProduct } from '@/api/product/product.js';
 
 //  制单人
 const userStore = useUserStore();
 const { id, name } = storeToRefs(userStore);
-const order = ref({
+const form = ref({
   orderTime: new Date(),
   deliverDate: new Date(),
   orderNum: 'XSD' + format(new Date(), 'yyyyMMddHHmmss'),
   needDeliver: false,
   maker: { id: id, name: name },
+  details: [{}, {}, {}, {}, {}, {}, {}, {}],
 });
 
 const customerList = listCustomer();
 const useCustomerAddress = () => {
-  if (!order.value.customer) {
+  if (!form.value.customer) {
     ElMessage({
       message: '请先选择客户',
       type: 'error',
@@ -182,8 +195,8 @@ const useCustomerAddress = () => {
     });
     return;
   }
-  order.value.linkman = customerList.find(item => item.id === order.value.customer).linkman;
-  order.value.mobile = customerList.find(item => item.id === order.value.customer).mobile;
+  form.value.linkman = customerList.find(item => item.id === form.value.customer).linkman;
+  form.value.mobile = customerList.find(item => item.id === form.value.customer).mobile;
 };
 const price = ref();
 
@@ -192,13 +205,6 @@ const employList = [
   { id: 2, name: '员工1' },
   { id: 3, name: '员工2' },
 ];
-
-// 商品信息
-const productList = listProduct();
-// console.log(productList);
-
-// 订单商品信息
-const tableData = ref([{}, {}, {}, {}, {}, {}, {}, {}]);
 
 const handleProductClick = () => {
   console.log('点击商品名称');
@@ -213,8 +219,7 @@ const salesManList = [
 
 const onSubmit = () => {
   console.log('保存订单');
-  console.log(order.value);
-  console.log(tableData);
+  console.log(form.value);
 };
 </script>
 
