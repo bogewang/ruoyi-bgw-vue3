@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/utils/request';
 
 export function queryHome(data) {
   return request({
@@ -8,5 +8,5 @@ export function queryHome(data) {
     },
     method: 'post',
     data: data,
-  })
+  });
 }

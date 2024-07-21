@@ -1,3 +1,5 @@
+import request from '@/utils/request';
+
 export function listSales(currentPage, pageSize) {
   const data = [
     {
@@ -231,4 +233,12 @@ export function listSales(currentPage, pageSize) {
     totalRows: data.length,
     data: data2,
   };
+}
+
+export function saveSaleOrder(data) {
+  return request({
+    url: '/saleOrder/saveSaleOrder.json',
+    method: 'post',
+    data: data,
+  });
 }

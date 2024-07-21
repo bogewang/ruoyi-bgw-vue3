@@ -3,7 +3,9 @@
     <el-card>
       <template #header>
         <div class="header">
-          <el-icon size="large" style="color: #1ab394"><List /></el-icon>
+          <el-icon size="large" style="color: #1ab394">
+            <List />
+          </el-icon>
           <el-text size="large" style="margin: 10px">销售单</el-text>
 
           <el-button-group class="product-btn-group">
@@ -25,7 +27,7 @@
         <el-row>
           <el-col :span="4">
             <el-form-item label="客户">
-              <el-select v-model="form.customer" clearable>
+              <el-select v-model="form.customerId" clearable>
                 <el-option v-for="dict in customerList" :key="dict.id" :label="dict.name" :value="dict.id" />
               </el-select>
             </el-form-item>
@@ -37,7 +39,7 @@
           </el-col>
           <el-col :span="4">
             <el-form-item label="单据编号">
-              <el-input v-model="form.orderNum"></el-input>
+              <el-input v-model="form.code"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="4">
@@ -71,7 +73,7 @@
 
         <el-row>
           <el-table
-            :data="form.details"
+            :data="form.detailList"
             border
             show-summary
             style="width: 100%"
@@ -81,12 +83,18 @@
           >
             <el-table-column label="序号" type="index" width="55" />
             <el-table-column label="操作" type="index" width="100">
-              <el-icon size="large" style="color: #64ee64; margin-right: 10px"><CirclePlusFilled /></el-icon>
-              <el-icon size="large" style="color: red"><RemoveFilled /></el-icon>
+              <el-icon size="large" style="color: #64ee64; margin-right: 10px">
+                <CirclePlusFilled />
+              </el-icon>
+              <el-icon size="large" style="color: red">
+                <RemoveFilled />
+              </el-icon>
             </el-table-column>
             <el-table-column prop="name" label="商品名称" width="200">
               <template #default="scope">
-                <el-input v-model="scope.row.name" @click="handleProductClick"></el-input>
+                <el-select v-model="scope.row.productId" clearable>
+                  <el-option v-for="dict in productList" :key="dict.id" :label="dict.name" :value="dict.id" />
+                </el-select>
               </template>
             </el-table-column>
             <el-table-column prop="unit" label="单位" width="200">
@@ -94,14 +102,19 @@
                 <el-input v-model="scope.row.unit"></el-input>
               </template>
             </el-table-column>
+            <el-table-column prop="orderNum" label="数量" width="200">
+              <template #default="scope">
+                <el-input v-model="scope.row.orderNum"></el-input>
+              </template>
+            </el-table-column>
             <el-table-column prop="cost" label="成本价(元)" width="200">
               <template #default="scope">
                 <el-input v-model="scope.row.cost"></el-input>
               </template>
             </el-table-column>
-            <el-table-column prop="salePrice" label="售价(元)" width="200">
+            <el-table-column prop="oriPrice" label="售价(元)" width="200">
               <template #default="scope">
-                <el-input v-model="scope.row.salePrice"></el-input>
+                <el-input v-model="scope.row.oriPrice"></el-input>
               </template>
             </el-table-column>
             <el-table-column prop="amount" label="金额(元)" width="200">
@@ -109,9 +122,9 @@
                 <el-input v-model="scope.row.amount"></el-input>
               </template>
             </el-table-column>
-            <el-table-column prop="remark" label="备注" width="200">
+            <el-table-column prop="description" label="备注" width="200">
               <template #default="scope">
-                <el-input v-model="scope.row.remark"></el-input>
+                <el-input v-model="scope.row.description"></el-input>
               </template>
             </el-table-column>
           </el-table>
@@ -120,7 +133,7 @@
         <el-row>
           <el-col :span="6">
             <el-form-item label="业务员">
-              <el-select v-model="form.salesMan" clearable>
+              <el-select v-model="form.salerId" clearable>
                 <el-option v-for="dict in salesManList" :key="dict.id" :label="dict.name" :value="dict.id" />
               </el-select>
             </el-form-item>
@@ -136,14 +149,14 @@
 
           <el-col :span="6">
             <el-form-item label="其他费用">
-              <el-input v-model="form.otherExpenses"></el-input>
+              <el-input v-model="form.otherCost"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="备注信息">
-              <el-input v-model="form.remark"></el-input>
+              <el-input v-model="form.description"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -169,9 +182,12 @@ import { CirclePlusFilled, RemoveFilled } from '@element-plus/icons-vue';
 import { listCustomer } from '@/api/customer/customer.js';
 import { format } from 'date-fns';
 import { ElMessage } from 'element-plus';
-import { useUserStore } from '@/store/modules/user';
+import { useUserStore } from '@/store/modules/user.js';
 import { storeToRefs } from 'pinia';
-// import { listProduct } from '@/api/product/product.js';
+import { listProduct } from '@/api/product/product.js';
+import { saveSaleOrder } from '@/api/sales/sales.js';
+
+const productList = listProduct();
 
 //  制单人
 const userStore = useUserStore();
@@ -179,15 +195,15 @@ const { id, name } = storeToRefs(userStore);
 const form = ref({
   orderTime: new Date(),
   deliverDate: new Date(),
-  orderNum: 'XSD' + format(new Date(), 'yyyyMMddHHmmss'),
+  code: 'XSD' + format(new Date(), 'yyyyMMddHHmmss'),
   needDeliver: false,
   maker: { id: id, name: name },
-  details: [{}, {}, {}, {}, {}, {}, {}, {}],
+  detailList: [{}, {}, {}, {}, {}, {}, {}, {}],
 });
 
 const customerList = listCustomer();
 const useCustomerAddress = () => {
-  if (!form.value.customer) {
+  if (!form.value.customerId) {
     ElMessage({
       message: '请先选择客户',
       type: 'error',
@@ -195,9 +211,11 @@ const useCustomerAddress = () => {
     });
     return;
   }
-  form.value.linkman = customerList.find(item => item.id === form.value.customer).linkman;
-  form.value.mobile = customerList.find(item => item.id === form.value.customer).mobile;
+  const customer = customerList.find(item => item.id === form.value.customerId);
+  form.value.linkman = customer.linkman;
+  form.value.mobile = customer.mobile;
 };
+
 const price = ref();
 
 const employList = [
@@ -206,11 +224,6 @@ const employList = [
   { id: 3, name: '员工2' },
 ];
 
-const handleProductClick = () => {
-  console.log('点击商品名称');
-};
-
-// 业务员
 const salesManList = [
   { id: 1, name: '销售员1' },
   { id: 2, name: '销售员2' },
@@ -219,7 +232,18 @@ const salesManList = [
 
 const onSubmit = () => {
   console.log('保存订单');
-  console.log(form.value);
+  const param = { ...form.value };
+  param.maker = param.maker.id;
+  param.detailList = param.detailList.filter(item => item.productId !== null);
+  console.log(param);
+  saveSaleOrder(param).then(res => {
+    console.log('order_id' + res);
+    ElMessage({
+      message: '保存成功!',
+      type: 'success',
+      plain: true,
+    });
+  });
 };
 </script>
 
@@ -234,12 +258,15 @@ const onSubmit = () => {
   .el-table {
     margin-bottom: 20px;
   }
+
   .use-customer-address {
     margin-left: 10px;
   }
+
   .sale-price {
     margin: 10px;
   }
+
   .product-btn-group {
     margin: 0 10px;
   }
