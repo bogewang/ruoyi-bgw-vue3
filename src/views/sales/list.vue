@@ -66,31 +66,28 @@
         :cell-style="{ 'text-align': 'center' }"
       >
         <el-table-column fixed type="selection" width="55" />
-        <el-table-column sortable prop="date" label="Date" width="100" />
-        <el-table-column sortable prop="name" label="Name" width="100" />
-        <el-table-column sortable prop="state" label="State" width="100" />
-        <el-table-column sortable prop="city" label="City" width="150" />
-        <el-table-column sortable prop="zip" label="Zip" width="100" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
-        <el-table-column sortable prop="address" label="Address" width="200" />
+        <el-table-column sortable prop="id" label="id" width="100" />
+        <el-table-column sortable prop="code" label="单据编号" width="100" />
+        <el-table-column sortable prop="scId" label="仓库" width="150" />
+        <el-table-column sortable prop="customerId" label="客户" width="100" />
+        <el-table-column sortable prop="salerId" label="销售人员" width="200" />
+        <el-table-column sortable prop="totalNum" label="销售数量" width="200" />
+        <el-table-column sortable prop="totalGiftNum" label="赠品数量" width="200" />
+        <el-table-column sortable prop="totalAmount" label="总金额" width="200" />
+        <el-table-column sortable prop="description" label="备注" width="200" />
+        <el-table-column sortable prop="approveBy" label="审核人" width="200" />
+        <el-table-column sortable prop="createTime" label="创建时间" width="200" />
+        <el-table-column sortable prop="approveTime" label="审核时间" width="200" />
+        <el-table-column sortable prop="status" label="状态" width="200" />
+        <el-table-column sortable prop="refuseReason" label="拒绝原因" width="200" />
+        <el-table-column sortable prop="needDeliver" label="需要送货" width="200" />
+        <el-table-column sortable prop="needInvoice" label="需要发票" width="200" />
+        <el-table-column sortable prop="deliverDate" label="送货日期" width="200" />
+        <el-table-column sortable prop="linkMan" label="联系人" width="200" />
+        <el-table-column sortable prop="mobile" label="联系方式" width="200" />
+        <el-table-column sortable prop="maker" label="制单人" width="200" />
+        <el-table-column sortable prop="otherCost" label="其他费用" width="200" />
+        <el-table-column sortable prop="orderTime" label="订单时间" width="200" />
         <el-table-column fixed="right" prop="operate" label="操作" width="250">
           <el-button-group>
             <el-button class="row-operate-btn">查看</el-button>
@@ -105,7 +102,7 @@
       <!-- 分页-->
       <div class="demo-pagination-block">
         <el-pagination
-          v-model:current-page="currentPage"
+          v-model:current-page="pageNum"
           v-model:page-size="pageSize"
           :page-sizes="[10, 20, 50, 100]"
           layout="total, sizes, prev, pager, next, jumper"
@@ -126,24 +123,25 @@ import { listCustomer } from '@/api/customer/customer.js';
 import { listSales } from '@/api/sales/sales.js';
 import { ref } from 'vue';
 
-const currentPage = ref(1);
+const pageNum = ref(1);
 const pageSize = ref(10);
 const totalRows = ref(0);
 const tableData = ref([]);
 const handleCurrentChange = () => {
-  tableData.value = listSales(currentPage, pageSize).data;
+  tableData.value = listSales(pageNum, pageSize).data;
 };
 
 const handleSizeChange = () => {
-  tableData.value = listSales(currentPage, pageSize).data;
+  tableData.value = listSales(pageNum, pageSize).data;
 };
 const searchQuery = () => {
   console.log('搜索');
 };
 
-const pageResult = listSales(currentPage, pageSize);
-tableData.value = pageResult.data;
-totalRows.value = pageResult.totalRows;
+listSales({ pageNum, pageSize }).then(res => {
+  tableData.value = res.list;
+  totalRows.value = res.total;
+});
 
 const receiptType = listRepository();
 const customerList = listCustomer();
@@ -154,7 +152,9 @@ const queryParams = reactive({
 });
 
 const onSubmit = () => {
-  console.log('submit!');
+  listSales({}).then(res => {
+    console.log(res);
+  });
 };
 </script>
 
