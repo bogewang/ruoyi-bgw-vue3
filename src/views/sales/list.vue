@@ -66,8 +66,7 @@
         :cell-style="{ 'text-align': 'center' }"
       >
         <el-table-column fixed type="selection" width="55" />
-        <el-table-column sortable prop="id" label="id" width="100" />
-        <el-table-column sortable prop="code" label="单据编号" width="100" />
+        <el-table-column sortable prop="code" label="单据编号" width="200" />
         <el-table-column sortable prop="scId" label="仓库" width="150" />
         <el-table-column sortable prop="customerId" label="客户" width="100" />
         <el-table-column sortable prop="salerId" label="销售人员" width="200" />
