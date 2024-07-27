@@ -83,12 +83,14 @@
           >
             <el-table-column label="序号" type="index" width="55" />
             <el-table-column label="操作" type="index" width="100">
-              <el-icon size="large" style="color: #64ee64; margin-right: 10px">
-                <CirclePlusFilled />
-              </el-icon>
-              <el-icon size="large" style="color: red">
-                <RemoveFilled />
-              </el-icon>
+              <template #default="scope">
+                <el-icon size="large" style="color: #64ee64; margin-right: 10px" @click="addRow">
+                  <CirclePlusFilled />
+                </el-icon>
+                <el-icon size="large" style="color: red" @click="deleteRow(scope.$index)">
+                  <RemoveFilled />
+                </el-icon>
+              </template>
             </el-table-column>
             <el-table-column prop="name" label="商品名称" width="200">
               <template #default="scope">
@@ -227,7 +229,6 @@ const salesManList = [
 const onSubmit = () => {
   const param = { ...form.value };
   param.detailList = param.detailList.filter(item => item.productId !== null);
-  console.log(param);
   saveSaleOrder(param).then(res => {
     ElMessage({
       message: '保存成功!',
@@ -254,6 +255,14 @@ const loadData = () => {
     form.value = res;
   });
 };
+
+const deleteRow = index => {
+  form.value.detailList.splice(index, 1);
+};
+const addRow = () => {
+  form.value.detailList.push({});
+};
+
 if (id) {
   loadData();
 } else {
