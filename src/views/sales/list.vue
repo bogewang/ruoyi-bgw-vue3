@@ -44,7 +44,7 @@
         <!--<el-button>审核</el-button>-->
         <!--<el-button>取消审核</el-button>-->
         <el-button>删除</el-button>
-        <el-button type="primary" @click="add">新增</el-button>
+        <el-button type="primary" @click="add(null)">新增</el-button>
         <el-button>导出</el-button>
       </el-button-group>
 
@@ -59,6 +59,7 @@
         :cell-style="{ 'text-align': 'center' }"
       >
         <el-table-column fixed type="selection" width="55" />
+        <el-table-column v-if="false" prop="id" label="ID" width="200" />
         <el-table-column sortable prop="code" label="单据编号" width="200" />
         <el-table-column sortable prop="scId" label="仓库" width="150" />
         <el-table-column sortable prop="customerId" label="客户" width="100" />
@@ -81,13 +82,15 @@
         <el-table-column sortable prop="otherCost" label="其他费用" width="200" />
         <el-table-column sortable prop="orderTime" label="订单时间" width="200" />
         <el-table-column fixed="right" prop="operate" label="操作" width="250">
-          <el-button-group>
-            <el-button class="row-operate-btn">查看</el-button>
-            <el-button class="row-operate-btn">修改</el-button>
-            <el-button class="row-operate-btn">删除</el-button>
-            <el-button class="row-operate-btn">审核</el-button>
-            <el-button class="row-operate-btn">打印</el-button>
-          </el-button-group>
+          <template #default="scope">
+            <el-button-group>
+              <el-button class="row-operate-btn">查看</el-button>
+              <el-button class="row-operate-btn" @click="add(scope.row.id)">修改</el-button>
+              <el-button class="row-operate-btn">删除</el-button>
+              <el-button class="row-operate-btn">审核</el-button>
+              <el-button class="row-operate-btn">打印</el-button>
+            </el-button-group>
+          </template>
         </el-table-column>
       </el-table>
 
@@ -185,8 +188,8 @@ const getSummaries = ({ columns, data }) => {
   return sums;
 };
 
-const add = () => {
-  router.push('/sales/add');
+const add = id => {
+  router.push(`/sales/add?id=${id}`);
 };
 list();
 </script>

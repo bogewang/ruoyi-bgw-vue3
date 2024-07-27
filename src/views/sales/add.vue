@@ -186,18 +186,22 @@ import { useUserStore } from '@/store/modules/user.js';
 import { storeToRefs } from 'pinia';
 import { listProduct } from '@/api/product/product.js';
 import { saveSaleOrder } from '@/api/sales/sales.js';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const id = route.query.id;
 
 const productList = listProduct();
 
 //  制单人
 const userStore = useUserStore();
-const { id, name } = storeToRefs(userStore);
+const { userId, name } = storeToRefs(userStore);
 const form = ref({
   orderTime: new Date(),
   deliverDate: new Date(),
   code: 'XSD' + format(new Date(), 'yyyyMMddHHmmss'),
   needDeliver: false,
-  maker: { id: id, name: name },
+  maker: { id: userId, name: name },
   detailList: [{}, {}, {}, {}, {}, {}, {}, {}],
 });
 
