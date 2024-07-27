@@ -56,10 +56,9 @@
 
       <el-table
         :data="tableData"
-        border
         show-summary
+        :summary-method="getSummaries"
         style="width: 100%"
-        highlight-current-row
         index
         fit
         :header-cell-style="{ 'text-align': 'center' }"
@@ -104,7 +103,7 @@
           v-model:current-page="pageNum"
           v-model:page-size="pageSize"
           :page-sizes="[10, 20, 50, 100]"
-          layout="total, sizes, prev, pager, next, jumper"
+          layout="prev, pager, next, total, sizes"
           :total="totalRows"
           style="justify-content: flex-end; margin-right: 10px"
           @size-change="handleSizeChange"
@@ -155,6 +154,35 @@ const onSubmit = () => {
     console.log(res);
   });
 };
+
+const getSummaries = ({ columns, data }) => {
+  const sums = [];
+  columns.forEach((column, index) => {
+    console.log(column);
+    if (index === 0) {
+      sums[index] = '合计';
+      return;
+    }
+    if (column.property !== 'totalAmount') {
+      return;
+    }
+
+    const values = data.map(item => Number(item[column.property]));
+    if (!values.every(value => isNaN(value))) {
+      sums[index] = values.reduce((prev, curr) => {
+        const value = Number(curr);
+        if (!isNaN(value)) {
+          return prev + curr;
+        } else {
+          return prev;
+        }
+      }, 0);
+    } else {
+      sums[index] = 'N/A';
+    }
+  });
+  return sums;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -166,6 +194,11 @@ const onSubmit = () => {
   .demo-pagination-block {
     margin-top: 10px;
     display: flex;
+    justify-content: flex-end;
+  }
+  /* 使合计行文字居中 */
+  ::v-deep .el-table__footer .cell {
+    text-align: center;
   }
 
   .el-table {
