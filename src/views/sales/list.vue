@@ -33,7 +33,7 @@
 
         <el-row justify="center">
           <el-button type="primary" @click="doSearch">搜索</el-button>
-          <el-button>重置</el-button>
+          <el-button @click="reset">重置</el-button>
         </el-row>
       </el-form>
     </el-card>
@@ -138,6 +138,9 @@ const queryParams = ref({
   scId: null,
   customerId: null,
 });
+const reset = () => {
+  queryParams.value = {};
+};
 
 const doSearch = () => {
   pageNum.value = 1;
