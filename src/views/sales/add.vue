@@ -225,7 +225,6 @@ const salesManList = [
 ];
 
 const onSubmit = () => {
-  console.log('保存订单');
   const param = { ...form.value };
   param.detailList = param.detailList.filter(item => item.productId !== null);
   console.log(param);
