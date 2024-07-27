@@ -16,7 +16,7 @@
           </el-button-group>
 
           <el-text class="sale-price">销售价格</el-text>
-          <el-radio-group v-model="price">
+          <el-radio-group v-model="form.price">
             <el-radio value="wholesale">批发价</el-radio>
             <el-radio value="retail">零售价</el-radio>
           </el-radio-group>
@@ -58,7 +58,7 @@
           </el-col>
           <el-col :span="4">
             <el-form-item label="联系人">
-              <el-input v-model="form.linkman"></el-input>
+              <el-input v-model="form.linkMan"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="4">
@@ -177,7 +177,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { CirclePlusFilled, RemoveFilled } from '@element-plus/icons-vue';
 import { listCustomer } from '@/api/customer/customer.js';
 import { format } from 'date-fns';
@@ -195,16 +195,8 @@ const productList = listProduct();
 
 //  制单人
 const userStore = useUserStore();
-const { userId, name } = storeToRefs(userStore);
-const form = ref({
-  orderTime: new Date(),
-  deliverDate: new Date(),
-  code: 'XSD' + format(new Date(), 'yyyyMMddHHmmss'),
-  needDeliver: false,
-  maker: { id: userId, name: name },
-  detailList: [{}, {}, {}, {}, {}, {}, {}, {}],
-});
-
+const { userId } = storeToRefs(userStore);
+const form = ref({});
 const customerList = listCustomer();
 const useCustomerAddress = () => {
   if (!form.value.customerId) {
@@ -216,32 +208,28 @@ const useCustomerAddress = () => {
     return;
   }
   const customer = customerList.find(item => item.id === form.value.customerId);
-  form.value.linkman = customer.linkman;
+  form.value.linkMan = customer.linkMan;
   form.value.mobile = customer.mobile;
 };
 
-const price = ref();
-
 const employList = [
-  { id: 1, name: 'admin' },
-  { id: 2, name: '员工1' },
-  { id: 3, name: '员工2' },
+  { id: '1', name: 'admin' },
+  { id: '2', name: '员工1' },
+  { id: '3', name: '员工2' },
 ];
 
 const salesManList = [
-  { id: 1, name: '销售员1' },
-  { id: 2, name: '销售员2' },
-  { id: 3, name: '销售员3' },
+  { id: '1', name: '销售员1' },
+  { id: '2', name: '销售员2' },
+  { id: '3', name: '销售员3' },
 ];
 
 const onSubmit = () => {
   console.log('保存订单');
   const param = { ...form.value };
-  param.maker = param.maker.id;
   param.detailList = param.detailList.filter(item => item.productId !== null);
   console.log(param);
   saveSaleOrder(param).then(res => {
-    console.log('order_id' + res);
     ElMessage({
       message: '保存成功!',
       type: 'success',
@@ -250,13 +238,28 @@ const onSubmit = () => {
   });
 };
 
-onMounted(() => {
-  if (id) {
-    querySaleOrderOne({ id: id }).then(res => {
-      form.value = res;
-    });
-  }
-});
+const reset = () => {
+  form.value = {
+    orderTime: new Date(),
+    deliverDate: new Date(),
+    code: 'XSD' + format(new Date(), 'yyyyMMddHHmmss'),
+    needDeliver: false,
+    maker: userId,
+    detailList: [{}, {}, {}, {}, {}, {}, {}, {}],
+  };
+};
+
+const loadData = () => {
+  querySaleOrderOne({ id: id }).then(res => {
+    console.log(res);
+    form.value = res;
+  });
+};
+if (id) {
+  loadData();
+} else {
+  reset();
+}
 </script>
 
 <style lang="scss" scoped>
