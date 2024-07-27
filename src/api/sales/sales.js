@@ -15,3 +15,10 @@ export function saveSaleOrder(data) {
     data: data,
   });
 }
+export function querySaleOrderOne(data) {
+  return request({
+    url: '/saleOrder/querySaleOrderOne.json',
+    method: 'post',
+    data: data,
+  });
+}

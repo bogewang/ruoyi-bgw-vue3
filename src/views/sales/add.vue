@@ -177,7 +177,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { CirclePlusFilled, RemoveFilled } from '@element-plus/icons-vue';
 import { listCustomer } from '@/api/customer/customer.js';
 import { format } from 'date-fns';
@@ -187,10 +187,10 @@ import { storeToRefs } from 'pinia';
 import { listProduct } from '@/api/product/product.js';
 import { saveSaleOrder } from '@/api/sales/sales.js';
 import { useRoute } from 'vue-router';
+import { querySaleOrderOne } from '@/api/sales/sales.js';
 
 const route = useRoute();
 const id = route.query.id;
-
 const productList = listProduct();
 
 //  制单人
@@ -249,6 +249,14 @@ const onSubmit = () => {
     });
   });
 };
+
+onMounted(() => {
+  if (id) {
+    querySaleOrderOne({ id: id }).then(res => {
+      form.value = res;
+    });
+  }
+});
 </script>
 
 <style lang="scss" scoped>
