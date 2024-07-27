@@ -105,4 +105,4 @@ export default {
    */
   singleAttributePerLine: false,
   disableLanguages: ['html'],
-}
+};

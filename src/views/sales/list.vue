@@ -1,13 +1,7 @@
 <template>
   <div class="app-container">
     <el-card :body-style="{ padding: '10px !important' }">
-      <el-form
-        :inline="true"
-        :model="queryParams"
-        class="demo-form-inline"
-        label-width="80px"
-        @keyup.enter="searchQuery"
-      >
+      <el-form :inline="true" :model="queryParams" class="demo-form-inline" label-width="80px" @keyup.enter="doSearch">
         <el-row class="btn-row">
           <el-col :span="6">
             <el-form-item label="单据号">
@@ -25,7 +19,7 @@
           <el-col :span="6">
             <el-form-item label="客户">
               <el-select v-model="queryParams.customer" clearable>
-                <el-option v-for="dict in customerList" :key="dict.value" :label="dict.label" :value="dict.value" />
+                <el-option v-for="dict in customerList" :key="dict.id" :label="dict.name" :value="dict.id" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -38,7 +32,7 @@
         </el-row>
 
         <el-row justify="center">
-          <el-button type="primary" @click="onSubmit">搜索</el-button>
+          <el-button type="primary" @click="doSearch">搜索</el-button>
           <el-button>重置</el-button>
         </el-row>
       </el-form>
@@ -46,11 +40,11 @@
 
     <el-card>
       <el-button-group class="operate-btn-group">
-        <el-button>便捷收款</el-button>
-        <el-button>审核</el-button>
-        <el-button>取消审核</el-button>
+        <!--<el-button>便捷收款</el-button>-->
+        <!--<el-button>审核</el-button>-->
+        <!--<el-button>取消审核</el-button>-->
         <el-button>删除</el-button>
-        <el-button type="primary">新增</el-button>
+        <el-button type="primary" @click="add">新增</el-button>
         <el-button>导出</el-button>
       </el-button-group>
 
@@ -100,8 +94,8 @@
       <!-- 分页-->
       <div class="demo-pagination-block">
         <el-pagination
-          v-model:current-page="pageNum"
-          v-model:page-size="pageSize"
+          :current-page="pageNum"
+          :page-size="pageSize"
           :page-sizes="[10, 20, 50, 100]"
           layout="prev, pager, next, total, sizes"
           :total="totalRows"
@@ -115,50 +109,48 @@
 </template>
 
 <script setup name="SalesDocumentQuery">
-import { reactive } from 'vue';
 import { listRepository } from '@/api/repository/repository.js';
 import { listCustomer } from '@/api/customer/customer.js';
 import { listSales } from '@/api/sales/sales.js';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const pageNum = ref(1);
 const pageSize = ref(10);
 const totalRows = ref(0);
 const tableData = ref([]);
-const handleCurrentChange = () => {
-  tableData.value = listSales(pageNum, pageSize).data;
+const handleCurrentChange = currentPage => {
+  pageNum.value = currentPage;
+  doSearch();
 };
 
-const handleSizeChange = () => {
-  tableData.value = listSales(pageNum, pageSize).data;
+const handleSizeChange = size => {
+  pageSize.value = size;
+  doSearch();
 };
-const searchQuery = () => {
-  console.log('搜索');
-};
-
-listSales({ pageNum, pageSize }).then(res => {
-  tableData.value = res.list;
-  totalRows.value = res.total;
-});
 
 const receiptType = listRepository();
 const customerList = listCustomer();
-const queryParams = reactive({
+const queryParams = {
   user: '',
   region: '',
   date: '',
-});
+};
 
-const onSubmit = () => {
-  listSales({}).then(res => {
-    console.log(res);
+const doSearch = () => {
+  queryParams.pageNum = pageNum.value;
+  queryParams.pageSize = pageSize.value;
+  queryParams.id = 1;
+  listSales(queryParams).then(res => {
+    tableData.value = res.list;
+    totalRows.value = res.total;
   });
 };
 
 const getSummaries = ({ columns, data }) => {
   const sums = [];
   columns.forEach((column, index) => {
-    console.log(column);
     if (index === 0) {
       sums[index] = '合计';
       return;
@@ -183,6 +175,11 @@ const getSummaries = ({ columns, data }) => {
   });
   return sums;
 };
+
+const add = () => {
+  router.push('/sales/add');
+};
+doSearch();
 </script>
 
 <style lang="scss" scoped>

@@ -4,7 +4,7 @@ export function listSales(query) {
   return request({
     url: '/saleOrder/listSaleOrder.json',
     method: 'get',
-    data: query,
+    params: query,
   });
 }
 
