@@ -1,32 +1,32 @@
 <template>
   <div class="app-container">
     <el-card :body-style="{ padding: '10px !important' }">
-      <el-form :inline="true" :model="queryParams" class="demo-form-inline" label-width="80px" @keyup.enter="doSearch">
+      <el-form :inline="true" :model="queryParams" class="demo-form-inline" label-width="80px" @keyup.enter="list">
         <el-row class="btn-row">
           <el-col :span="6">
             <el-form-item label="单据号">
-              <el-input v-model="queryParams.billNum" clearable />
+              <el-input v-model="queryParams.code" clearable />
             </el-form-item>
           </el-col>
 
           <el-col :span="6">
             <el-form-item label="仓库">
-              <el-select v-model="queryParams.repo" clearable>
+              <el-select v-model="queryParams.scId" clearable>
                 <el-option v-for="dict in receiptType" :key="dict.value" :label="dict.label" :value="dict.value" />
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="客户">
-              <el-select v-model="queryParams.customer" clearable>
+              <el-select v-model="queryParams.customerId" clearable>
                 <el-option v-for="dict in customerList" :key="dict.id" :label="dict.name" :value="dict.id" />
               </el-select>
             </el-form-item>
           </el-col>
 
           <el-col :span="6">
-            <el-form-item label="审核状态">
-              <el-input v-model="queryParams.billNum" clearable />
+            <el-form-item label="状态">
+              <el-input v-model="queryParams.status" clearable />
             </el-form-item>
           </el-col>
         </el-row>
@@ -122,29 +122,35 @@ const totalRows = ref(0);
 const tableData = ref([]);
 const handleCurrentChange = currentPage => {
   pageNum.value = currentPage;
-  doSearch();
+  list();
 };
 
 const handleSizeChange = size => {
   pageSize.value = size;
-  doSearch();
+  list();
 };
 
 const receiptType = listRepository();
 const customerList = listCustomer();
-const queryParams = {
-  user: '',
-  region: '',
-  date: '',
-};
+const queryParams = ref({
+  code: null,
+  status: null,
+  scId: null,
+  customerId: null,
+});
 
 const doSearch = () => {
-  queryParams.pageNum = pageNum.value;
-  queryParams.pageSize = pageSize.value;
-  queryParams.id = 1;
-  listSales(queryParams).then(res => {
-    tableData.value = res.list;
-    totalRows.value = res.total;
+  pageNum.value = 1;
+  pageSize.value = 10;
+  list();
+};
+
+const list = () => {
+  queryParams.value.pageNum = pageNum.value;
+  queryParams.value.pageSize = pageSize.value;
+  listSales(queryParams.value).then(res => {
+    tableData.value = res.list || [];
+    totalRows.value = res.total || 0;
   });
 };
 
@@ -179,7 +185,7 @@ const getSummaries = ({ columns, data }) => {
 const add = () => {
   router.push('/sales/add');
 };
-doSearch();
+list();
 </script>
 
 <style lang="scss" scoped>
