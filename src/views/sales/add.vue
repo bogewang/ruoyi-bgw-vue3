@@ -137,7 +137,7 @@
           <el-col :span="6">
             <el-form-item label="业务员">
               <el-select v-model="form.salerId" clearable>
-                <el-option v-for="dict in salesManList" :key="dict.id" :label="dict.name" :value="dict.id" />
+                <el-option v-for="dict in salesManList" :key="dict.value" :label="dict.label" :value="dict.value" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -145,7 +145,7 @@
           <el-col :span="6">
             <el-form-item label="制单人">
               <el-select v-model="form.maker" clearable>
-                <el-option v-for="dict in employList" :key="dict.id" :label="dict.name" :value="dict.id" />
+                <el-option v-for="dict in employList" :key="dict.value" :label="dict.label" :value="dict.value" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -188,9 +188,10 @@ import { ElMessage } from 'element-plus';
 import { useUserStore } from '@/store/modules/user.js';
 import { storeToRefs } from 'pinia';
 import { listProduct } from '@/api/product/product.js';
-import { saveSaleOrder, getSummaries } from '@/api/sales/sales.js';
+import { saveSaleOrder, getSummaries, getSalerList } from '@/api/sales/sales.js';
 import { useRoute } from 'vue-router';
 import { querySaleOrderOne } from '@/api/sales/sales.js';
+import { listOrderMaker } from '@/api/system/user.js';
 
 const route = useRoute();
 const id = route.query.id;
@@ -215,17 +216,9 @@ const useCustomerAddress = () => {
   form.value.mobile = customer.mobile;
 };
 
-const employList = [
-  { id: '1', name: 'admin' },
-  { id: '2', name: '员工1' },
-  { id: '3', name: '员工2' },
-];
+const employList = listOrderMaker();
 
-const salesManList = [
-  { id: '1', name: '销售员1' },
-  { id: '2', name: '销售员2' },
-  { id: '3', name: '销售员3' },
-];
+const salesManList = getSalerList();
 
 const loading = ref(false);
 const onSubmit = () => {

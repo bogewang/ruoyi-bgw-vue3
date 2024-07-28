@@ -15,6 +15,7 @@ export function saveSaleOrder(data) {
     data: data,
   });
 }
+
 export function querySaleOrderOne(data) {
   return request({
     url: '/saleOrder/querySaleOrderOne.json',
@@ -34,6 +35,9 @@ export function getSummaries({ columns, data }) {
       return;
     }
 
+    if (!data || data.length == 0) {
+      return;
+    }
     const values = data.map(item => Number(item[column.property]));
     if (!values.every(value => isNaN(value))) {
       sums[index] = values.reduce((prev, curr) => {
@@ -49,4 +53,12 @@ export function getSummaries({ columns, data }) {
     }
   });
   return sums;
+}
+
+export function getSalerList() {
+  return [
+    { value: '1', label: '销售员1' },
+    { value: '2', label: '销售员2' },
+    { value: '3', label: '销售员3' },
+  ];
 }

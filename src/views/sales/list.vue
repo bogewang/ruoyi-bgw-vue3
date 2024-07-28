@@ -12,7 +12,7 @@
           <el-col :span="6">
             <el-form-item label="仓库">
               <el-select v-model="queryParams.scId" clearable>
-                <el-option v-for="dict in receiptType" :key="dict.value" :label="dict.label" :value="dict.value" />
+                <el-option v-for="dict in repoList" :key="dict.value" :label="dict.label" :value="dict.value" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -40,9 +40,6 @@
 
     <el-card>
       <el-button-group class="operate-btn-group">
-        <!--<el-button>便捷收款</el-button>-->
-        <!--<el-button>审核</el-button>-->
-        <!--<el-button>取消审核</el-button>-->
         <el-button>删除</el-button>
         <el-button type="primary" @click="add(null)">新增</el-button>
         <el-button>导出</el-button>
@@ -63,7 +60,7 @@
         <el-table-column sortable prop="code" label="单据编号" width="200" />
         <el-table-column sortable prop="scId" label="仓库" width="150" />
         <el-table-column sortable prop="customerId" label="客户" width="100" :formatter="formatCustomer" />
-        <el-table-column sortable prop="salerId" label="销售人员" width="200" />
+        <el-table-column sortable prop="salerId" label="销售人员" width="200" :formatter="formatSaler" />
         <el-table-column sortable prop="totalNum" label="销售数量" width="200" />
         <el-table-column sortable prop="totalGiftNum" label="赠品数量" width="200" />
         <el-table-column sortable prop="totalAmount" label="总金额" width="200" />
@@ -114,7 +111,7 @@
 <script setup name="SalesDocumentQuery">
 import { listRepository } from '@/api/repository/repository.js';
 import { listCustomer } from '@/api/customer/customer.js';
-import { listSales, getSummaries } from '@/api/sales/sales.js';
+import { listSales, getSummaries, getSalerList } from '@/api/sales/sales.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -134,7 +131,7 @@ const handleSizeChange = size => {
   list();
 };
 
-const receiptType = listRepository();
+const repoList = listRepository();
 const customerList = listCustomer();
 const queryParams = ref({
   code: null,
@@ -172,6 +169,9 @@ list();
 
 const formatCustomer = (row, column, cellValue) => {
   return proxy.selectDictLabel(customerList, cellValue);
+};
+const formatSaler = (row, column, cellValue) => {
+  return proxy.selectDictLabel(getSalerList(), cellValue);
 };
 </script>
 

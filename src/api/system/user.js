@@ -134,3 +134,11 @@ export function deptTreeSelect() {
     method: 'get',
   });
 }
+
+export function listOrderMaker() {
+  return [
+    { value: '1', label: 'admin' },
+    { value: '2', label: '员工1' },
+    { value: '3', label: '员工2' },
+  ];
+}
