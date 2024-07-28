@@ -19,7 +19,7 @@
           <el-col :span="6">
             <el-form-item label="客户">
               <el-select v-model="queryParams.customerId" clearable>
-                <el-option v-for="dict in customerList" :key="dict.id" :label="dict.name" :value="dict.id" />
+                <el-option v-for="dict in customerList" :key="dict.value" :label="dict.label" :value="dict.value" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -62,7 +62,7 @@
         <el-table-column v-if="false" prop="id" label="ID" width="200" />
         <el-table-column sortable prop="code" label="单据编号" width="200" />
         <el-table-column sortable prop="scId" label="仓库" width="150" />
-        <el-table-column sortable prop="customerId" label="客户" width="100" />
+        <el-table-column sortable prop="customerId" label="客户" width="100" :formatter="formatCustomer" />
         <el-table-column sortable prop="salerId" label="销售人员" width="200" />
         <el-table-column sortable prop="totalNum" label="销售数量" width="200" />
         <el-table-column sortable prop="totalGiftNum" label="赠品数量" width="200" />
@@ -118,6 +118,7 @@ import { listSales, getSummaries } from '@/api/sales/sales.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+const { proxy } = getCurrentInstance();
 const router = useRouter();
 const pageNum = ref(1);
 const pageSize = ref(10);
@@ -161,9 +162,17 @@ const list = () => {
 };
 
 const add = id => {
-  router.push(`/sales/add?id=${id}`);
+  if (id) {
+    router.push(`/sales/add?id=${id}`);
+  } else {
+    router.push(`/sales/add`);
+  }
 };
 list();
+
+const formatCustomer = (row, column, cellValue) => {
+  return proxy.selectDictLabel(customerList, cellValue);
+};
 </script>
 
 <style lang="scss" scoped>

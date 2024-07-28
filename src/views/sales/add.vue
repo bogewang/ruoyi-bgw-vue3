@@ -28,7 +28,7 @@
           <el-col :span="4">
             <el-form-item label="客户">
               <el-select v-model="form.customerId" clearable>
-                <el-option v-for="dict in customerList" :key="dict.id" :label="dict.name" :value="dict.id" />
+                <el-option v-for="dict in customerList" :key="dict.value" :label="dict.label" :value="dict.value" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -210,7 +210,7 @@ const useCustomerAddress = () => {
     });
     return;
   }
-  const customer = customerList.find(item => item.id === form.value.customerId);
+  const customer = customerList.find(item => item.value === form.value.customerId);
   form.value.linkMan = customer.linkMan;
   form.value.mobile = customer.mobile;
 };
