@@ -102,7 +102,9 @@
             </el-table-column>
             <el-table-column prop="unit" label="单位" width="200">
               <template #default="scope">
-                <el-input v-model="scope.row.unit"></el-input>
+                <el-select v-model="scope.row.unit" clearable>
+                  <el-option v-for="dict in unitList" :key="dict.value" :label="dict.label" :value="dict.value" />
+                </el-select>
               </template>
             </el-table-column>
             <el-table-column prop="orderNum" label="数量" width="200">
@@ -192,6 +194,7 @@ import { saveSaleOrder, getSummaries, getSalerList } from '@/api/sales/sales.js'
 import { useRoute } from 'vue-router';
 import { querySaleOrderOne } from '@/api/sales/sales.js';
 import { listOrderMaker } from '@/api/system/user.js';
+import { listUnit } from '@/api/unit.js';
 
 const route = useRoute();
 const id = route.query.id;
@@ -267,6 +270,7 @@ const addRow = () => {
   form.value.detailList.push({});
 };
 
+const unitList = listUnit();
 if (id) {
   loadData();
 } else {
