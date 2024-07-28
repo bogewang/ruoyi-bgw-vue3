@@ -16,7 +16,7 @@
           </el-button-group>
 
           <el-text class="sale-price">销售价格</el-text>
-          <el-radio-group v-model="form.price">
+          <el-radio-group v-model="form.priceType">
             <el-radio value="wholesale">批发价</el-radio>
             <el-radio value="retail">零售价</el-radio>
           </el-radio-group>
