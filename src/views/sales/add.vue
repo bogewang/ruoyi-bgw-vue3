@@ -76,6 +76,7 @@
             :data="form.detailList"
             border
             show-summary
+            :summary-method="getSummaries"
             style="width: 100%"
             fit
             :header-cell-style="{ 'text-align': 'center' }"
@@ -187,7 +188,7 @@ import { ElMessage } from 'element-plus';
 import { useUserStore } from '@/store/modules/user.js';
 import { storeToRefs } from 'pinia';
 import { listProduct } from '@/api/product/product.js';
-import { saveSaleOrder } from '@/api/sales/sales.js';
+import { saveSaleOrder, getSummaries } from '@/api/sales/sales.js';
 import { useRoute } from 'vue-router';
 import { querySaleOrderOne } from '@/api/sales/sales.js';
 
@@ -229,7 +230,7 @@ const salesManList = [
 const onSubmit = () => {
   const param = { ...form.value };
   param.detailList = param.detailList.filter(item => item.productId !== null);
-  saveSaleOrder(param).then(res => {
+  saveSaleOrder(param).then(() => {
     ElMessage({
       message: '保存成功!',
       type: 'success',
@@ -245,7 +246,7 @@ const reset = () => {
     code: 'XSD' + format(new Date(), 'yyyyMMddHHmmss'),
     needDeliver: false,
     maker: userId,
-    detailList: [{}, {}, {}, {}, {}, {}, {}, {}],
+    detailList: [{}, {}],
   };
 };
 
