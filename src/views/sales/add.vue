@@ -74,7 +74,6 @@
         <el-row>
           <el-table
             :data="form.detailList"
-            border
             show-summary
             :summary-method="getSummaries"
             style="width: 100%"
@@ -109,22 +108,22 @@
             </el-table-column>
             <el-table-column prop="orderNum" label="数量" width="200">
               <template #default="scope">
-                <el-input v-model="scope.row.orderNum"></el-input>
+                <el-input-number v-model="scope.row.orderNum" @change="updateAmount(scope.row)"></el-input-number>
               </template>
             </el-table-column>
             <el-table-column prop="cost" label="成本价(元)" width="200">
               <template #default="scope">
-                <el-input v-model="scope.row.cost"></el-input>
+                <el-input-number v-model="scope.row.cost"></el-input-number>
               </template>
             </el-table-column>
             <el-table-column prop="oriPrice" label="售价(元)" width="200">
               <template #default="scope">
-                <el-input v-model="scope.row.oriPrice"></el-input>
+                <el-input-number v-model="scope.row.oriPrice" @change="updateAmount(scope.row)"></el-input-number>
               </template>
             </el-table-column>
             <el-table-column prop="amount" label="金额(元)" width="200">
               <template #default="scope">
-                <el-input v-model="scope.row.amount"></el-input>
+                <el-text>{{ scope.row.amount }}</el-text>
               </template>
             </el-table-column>
             <el-table-column prop="description" label="备注" width="200">
@@ -241,6 +240,13 @@ const onSubmit = () => {
   });
 };
 
+const detailRow = {
+  orderNum: 0,
+  cost: 0,
+  oriPrice: 0,
+  amount: 0,
+};
+
 const reset = () => {
   form.value = {
     orderTime: new Date(),
@@ -248,7 +254,7 @@ const reset = () => {
     code: 'XSD' + format(new Date(), 'yyyyMMddHHmmss'),
     needDeliver: false,
     maker: userId,
-    detailList: [{}, {}],
+    detailList: [detailRow],
   };
   proxy.resetForm('formRef');
 };
@@ -267,7 +273,7 @@ const deleteRow = index => {
   form.value.detailList.splice(index, 1);
 };
 const addRow = () => {
-  form.value.detailList.push({});
+  form.value.detailList.push(detailRow);
 };
 
 const unitList = listUnit();
@@ -276,10 +282,19 @@ if (id) {
 } else {
   reset();
 }
+const updateAmount = row => {
+  row.orderNum = parseFloat(row.orderNum).toFixed(2);
+  row.oriPrice = parseFloat(row.oriPrice).toFixed(2);
+  row.amount = parseFloat(row.orderNum * row.oriPrice).toFixed(2);
+};
 </script>
 
 <style lang="scss" scoped>
 .app-container {
+  /* 使合计行文字居中 */
+  ::v-deep .el-table__footer .cell {
+    text-align: center;
+  }
   .save-btn {
     display: flex;
     justify-content: space-between;

@@ -251,3 +251,11 @@ export function getNormalPath(p) {
 export function blobValidate(data) {
   return data.type !== 'application/json';
 }
+
+export function formatNumber(value) {
+  const number = parseFloat(value);
+  if (isNaN(number)) {
+    return '0.00';
+  }
+  return number.toFixed(2);
+}
