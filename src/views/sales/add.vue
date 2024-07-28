@@ -23,7 +23,7 @@
         </div>
       </template>
 
-      <el-form ref="formRef" v-loading="loading" label-width="80px" :model="form">
+      <el-form ref="formRef" label-width="80px" :model="form">
         <el-row>
           <el-col :span="4">
             <el-form-item label="客户">
@@ -108,17 +108,27 @@
             </el-table-column>
             <el-table-column prop="orderNum" label="数量" width="200">
               <template #default="scope">
-                <el-input-number v-model="scope.row.orderNum" @change="updateAmount(scope.row)"></el-input-number>
+                <el-input-number
+                  v-model="scope.row.orderNum"
+                  :min="0"
+                  :precision="2"
+                  @change="updateAmount(scope.row)"
+                ></el-input-number>
               </template>
             </el-table-column>
             <el-table-column prop="cost" label="成本价(元)" width="200">
               <template #default="scope">
-                <el-input-number v-model="scope.row.cost"></el-input-number>
+                <el-input-number v-model="scope.row.cost" :min="0" :precision="2"></el-input-number>
               </template>
             </el-table-column>
             <el-table-column prop="oriPrice" label="售价(元)" width="200">
               <template #default="scope">
-                <el-input-number v-model="scope.row.oriPrice" @change="updateAmount(scope.row)"></el-input-number>
+                <el-input-number
+                  v-model="scope.row.oriPrice"
+                  :min="0"
+                  :precision="2"
+                  @change="updateAmount(scope.row)"
+                ></el-input-number>
               </template>
             </el-table-column>
             <el-table-column prop="amount" label="金额(元)" width="200">
@@ -227,15 +237,14 @@ const employList = listOrderMaker();
 
 const salesManList = getSalerList();
 
-const loading = ref(false);
 const onSubmit = () => {
   const param = { ...form.value };
   param.detailList = param.detailList.filter(item => item.productId !== null);
-  loading.value = true;
+  proxy.$modal.loading();
   console.log(param);
   saveSaleOrder(param).then(() => {
-    loading.value = false;
     ElMessage.success('保存成功');
+    proxy.$modal.closeLoading();
     proxy.$tab.closeOpenPage({ path: '/sales/list' });
   });
 };
@@ -270,6 +279,11 @@ const loadData = () => {
 };
 
 const deleteRow = index => {
+  if (form.value.detailList.length === 1) {
+    proxy.$modal.msgError('请至少保留一行');
+    return;
+  }
+
   form.value.detailList.splice(index, 1);
 };
 const addRow = () => {
@@ -283,8 +297,6 @@ if (id) {
   reset();
 }
 const updateAmount = row => {
-  row.orderNum = parseFloat(row.orderNum).toFixed(2);
-  row.oriPrice = parseFloat(row.oriPrice).toFixed(2);
   row.amount = parseFloat(row.orderNum * row.oriPrice).toFixed(2);
 };
 </script>
