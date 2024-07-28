@@ -112,13 +112,19 @@
                   v-model="scope.row.orderNum"
                   :min="0"
                   :precision="2"
+                  controls-position="right"
                   @change="updateAmount(scope.row)"
                 ></el-input-number>
               </template>
             </el-table-column>
             <el-table-column prop="cost" label="成本价(元)" width="200">
               <template #default="scope">
-                <el-input-number v-model="scope.row.cost" :min="0" :precision="2"></el-input-number>
+                <el-input-number
+                  v-model="scope.row.cost"
+                  :min="0"
+                  :precision="2"
+                  controls-position="right"
+                ></el-input-number>
               </template>
             </el-table-column>
             <el-table-column prop="oriPrice" label="售价(元)" width="200">
@@ -127,6 +133,7 @@
                   v-model="scope.row.oriPrice"
                   :min="0"
                   :precision="2"
+                  controls-position="right"
                   @change="updateAmount(scope.row)"
                 ></el-input-number>
               </template>
