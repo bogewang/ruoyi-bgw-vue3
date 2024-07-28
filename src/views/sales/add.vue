@@ -23,7 +23,7 @@
         </div>
       </template>
 
-      <el-form label-width="80px" :model="form">
+      <el-form ref="formRef" v-loading="loading" label-width="80px" :model="form">
         <el-row>
           <el-col :span="4">
             <el-form-item label="客户">
@@ -195,7 +195,7 @@ import { querySaleOrderOne } from '@/api/sales/sales.js';
 const route = useRoute();
 const id = route.query.id;
 const productList = listProduct();
-
+const { proxy } = getCurrentInstance();
 //  制单人
 const userStore = useUserStore();
 const { userId } = storeToRefs(userStore);
@@ -227,15 +227,15 @@ const salesManList = [
   { id: '3', name: '销售员3' },
 ];
 
+const loading = ref(false);
 const onSubmit = () => {
   const param = { ...form.value };
   param.detailList = param.detailList.filter(item => item.productId !== null);
+  loading.value = true;
   saveSaleOrder(param).then(() => {
-    ElMessage({
-      message: '保存成功!',
-      type: 'success',
-      plain: true,
-    });
+    loading.value = false;
+    ElMessage.success('保存成功');
+    proxy.$tab.closeOpenPage({ path: '/sales/list' });
   });
 };
 
@@ -248,6 +248,7 @@ const reset = () => {
     maker: userId,
     detailList: [{}, {}],
   };
+  proxy.resetForm('formRef');
 };
 
 const loadData = () => {
