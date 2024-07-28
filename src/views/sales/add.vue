@@ -96,7 +96,7 @@
             <el-table-column prop="name" label="商品名称" width="200">
               <template #default="scope">
                 <el-select v-model="scope.row.productId" clearable>
-                  <el-option v-for="dict in productList" :key="dict.id" :label="dict.name" :value="dict.id" />
+                  <el-option v-for="dict in productList" :key="dict.value" :label="dict.label" :value="dict.value" />
                 </el-select>
               </template>
             </el-table-column>
@@ -195,7 +195,12 @@ import { listOrderMaker } from '@/api/system/user.js';
 
 const route = useRoute();
 const id = route.query.id;
-const productList = listProduct();
+const productList = listProduct().map(item => {
+  return {
+    label: item.name,
+    value: item.id,
+  };
+});
 const { proxy } = getCurrentInstance();
 //  制单人
 const userStore = useUserStore();
@@ -225,6 +230,7 @@ const onSubmit = () => {
   const param = { ...form.value };
   param.detailList = param.detailList.filter(item => item.productId !== null);
   loading.value = true;
+  console.log(param);
   saveSaleOrder(param).then(() => {
     loading.value = false;
     ElMessage.success('保存成功');
@@ -248,6 +254,9 @@ const loadData = () => {
   querySaleOrderOne({ id: id }).then(res => {
     console.log(res);
     form.value = res;
+    if (!res.detailList) {
+      form.value.detailList = [{}];
+    }
   });
 };
 
