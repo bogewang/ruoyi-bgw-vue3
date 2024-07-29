@@ -177,6 +177,9 @@ const formatSaler = (row, column, cellValue) => {
 
 <style lang="scss" scoped>
 .app-container {
+  .el-form-item {
+    width: 100%;
+  }
   .row-operate-btn {
     padding: 0 5px !important;
   }
