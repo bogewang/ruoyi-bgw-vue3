@@ -180,18 +180,12 @@
               <el-input v-model="form.description"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item>
-              <el-button>上传附件</el-button>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="6" class="save-btn">
+          <el-col :span="6" :offset="6" class="save-btn">
             <el-checkbox v-model="form.needDeliver" label="保存后打印" />
-            <el-button type="primary" style="flex: 0 0 70%" size="large" @click="onSubmit">保存</el-button>
+            <el-button type="primary" style="flex: 0 0 70%" size="large" @click="saveData">保存</el-button>
           </el-col>
         </el-row>
-        <el-row></el-row>
+        <FileUpload ref="fileUploadRef" />
       </el-form>
     </el-card>
   </div>
@@ -244,9 +238,13 @@ const employList = listOrderMaker();
 
 const salesManList = getSalerList();
 
-const onSubmit = () => {
+const fileUploadRef = ref({});
+const saveData = () => {
+  const fileData = fileUploadRef.value?.fileList;
+
   const param = { ...form.value };
   param.detailList = param.detailList.filter(item => item.productId !== null);
+  param.fileData = fileData;
   proxy.$modal.loading();
   console.log(param);
   saveSaleOrder(param).then(() => {

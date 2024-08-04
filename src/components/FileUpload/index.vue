@@ -1,8 +1,8 @@
 <template>
   <div class="upload-file">
     <el-upload
-      multiple
       ref="fileUpload"
+      multiple
       :action="uploadFileUrl"
       :before-upload="handleBeforeUpload"
       :file-list="fileList"
@@ -33,8 +33,8 @@
     <!-- 文件列表 -->
     <transition-group class="upload-file-list el-upload-list el-upload-list--text" name="el-fade-in-linear" tag="ul">
       <li v-for="(file, index) in fileList" :key="file.uid" class="el-upload-list__item ele-upload-list__item-content">
-        <el-link :href="`${baseUrl}${file.url}`" :underline="false" target="_blank">
-          <span class="el-icon-document">{{ getFileName(file.name) }}</span>
+        <el-link :underline="false" target="_blank" @click="download(file.filePath)">
+          <span class="el-icon-document">{{ getFileName(file.filePath) }}</span>
         </el-link>
         <div class="ele-upload-list__item-content-action">
           <el-link :underline="false" type="danger" @click="handleDelete(index)">删除</el-link>
@@ -62,7 +62,7 @@ const props = defineProps({
   // 文件类型, 例如['png', 'jpg', 'jpeg']
   fileType: {
     type: Array,
-    default: () => ['doc', 'xls', 'ppt', 'txt', 'pdf'],
+    default: () => ['doc', 'xls', 'xlsx', 'ppt', 'txt', 'pdf', 'png'],
   },
   // 是否显示提示
   isShowTip: {
@@ -72,14 +72,18 @@ const props = defineProps({
 });
 
 const { proxy } = getCurrentInstance();
+// eslint-disable-next-line vue/valid-define-emits
 const emit = defineEmits();
 const number = ref(0);
 const uploadList = ref([]);
-const baseUrl = import.meta.env.VITE_APP_BASE_API;
 const uploadFileUrl = ref(import.meta.env.VITE_APP_BASE_API + '/common/upload'); // 上传文件服务器地址
 const headers = ref({ Authorization: 'Bearer ' + getToken() });
 const fileList = ref([]);
 const showTip = computed(() => props.isShowTip && (props.fileType || props.fileSize));
+
+defineExpose({
+  fileList, // list是向外暴露的属性/值
+});
 
 watch(
   () => props.modelValue,
@@ -135,14 +139,14 @@ function handleExceed() {
 }
 
 // 上传失败
-function handleUploadError(err) {
+function handleUploadError() {
   proxy.$modal.msgError('上传文件失败');
 }
 
 // 上传成功回调
 function handleUploadSuccess(res, file) {
   if (res.code === 200) {
-    uploadList.value.push({ name: res.fileName, url: res.fileName });
+    uploadList.value.push({ ...res.data });
     uploadedSuccessfully();
   } else {
     number.value--;
@@ -189,8 +193,12 @@ function listToString(list, separator) {
       strs += list[i].url + separator;
     }
   }
-  return strs != '' ? strs.substr(0, strs.length - 1) : '';
+  return strs !== '' ? strs.substr(0, strs.length - 1) : '';
 }
+
+const download = filePath => {
+  proxy.$download.name(filePath);
+};
 </script>
 
 <style scoped lang="scss">
